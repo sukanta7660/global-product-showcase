@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-12 mb-3">
                             <label
-                                for="name"
+                                for="location"
                                 class="form-label">
                                 Location
                             </label>
@@ -25,6 +25,7 @@
                                 Latitude
                             </label>
                             <input
+                                readonly
                                 type="text"
                                 placeholder="Latitude"
                                 class="form-control"
@@ -38,6 +39,7 @@
                             </label>
                             <input
                                 type="text"
+                                readonly
                                 class="form-control"
                                 placeholder="Longitude"
                                 id="longitude">
