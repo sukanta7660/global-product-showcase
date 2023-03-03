@@ -1,55 +1,64 @@
 <aside id="sidebar" class="sidebar">
 
+    @php
+      $sidebarLinks = config('site.sidebarLinks');
+    @endphp
     <ul class="sidebar-nav" id="sidebar-nav">
-
-        <li class="nav-item">
-            <a class="nav-link " href="{{ route('admin.dashboard') }}">
-                <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
-            </a>
-        </li>
-        <!-- End Dashboard Nav -->
-
-        <li class="nav-item">
-            <a
-                class="nav-link collapsed"
-                data-bs-target="#tables-nav"
-                data-bs-toggle="collapse"
-                href="#">
-                <i class="bi bi-layout-text-window-reverse"></i>
-                <span>Tables</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="tables-general.html">
-                        <i class="bi bi-circle"></i><span>General Tables</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="bi bi-circle"></i>
-                        <span>Data Tables</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <!-- Location -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-login.html">
-                <i class="bi bi-geo-fill"></i>
-                <span>Location</span>
-            </a>
-        </li>
-        <!-- !Location -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-login.html">
-                <i class="bi bi-box-arrow-in-right"></i>
-                <span>Login</span>
-            </a>
-        </li>
-
+        @foreach($sidebarLinks as $key => $link)
+            @php
+                $hasChild = count($link['child']) > 0;
+            @endphp
+            @if($hasChild)
+                @php
+                    $currentRoute = \Illuminate\Support\Facades\Route::currentRouteName();
+                    $matchingLinks = [];
+                    foreach ($link['child'] as $childLink) {
+                        if ($currentRoute == $childLink['route']) {
+                            $matchingLinks[] = $childLink;
+                        }
+                    }
+                @endphp
+            @endif
+        @php
+            $currentRoute = \Illuminate\Support\Facades\Route::currentRouteName();
+            $currentParentLinkActivity = $link['route']
+               ? $currentRoute === $link['route']
+               ? '' : 'collapsed'
+               : 'collapsed'
+           ;
+        @endphp
+            <li class="nav-item">
+                <a
+                    class="nav-link
+                    {{ $hasChild ? 'collapse' : '' }} {{ $hasChild ? count($matchingLinks) ? '' : 'collapsed' : $currentParentLinkActivity}}"
+                    data-bs-target="{{ $hasChild ? '#'.Str::slug($link['name']) : '' }}"
+                    data-bs-toggle="{{ $hasChild ? 'collapse' : '' }}"
+                    href="{{ !$link['route'] ? '#' : route($link['route']) }}">
+                    <i class="{{ $link['icon'] }}"></i>
+                    <span>{{ $link['name'] }}</span>
+                    @if($hasChild)
+                        <i class="bi bi-chevron-down ms-auto"></i>
+                    @endif
+                </a>
+                @if($hasChild)
+                    <ul
+                        id="{{ Str::slug($link['name']) }}"
+                        class="nav-content collapse {{ count($matchingLinks) ? 'show' : '' }}"
+                        data-bs-parent="#sidebar-nav">
+                        @foreach($link['child'] as $index => $childLink)
+                            <li>
+                                <a
+                                    class="{{ $childLink['route'] ? url()->full() === route($childLink['route']) ? 'active' : '' : '' }}"
+                                    href="{{ !$childLink['route'] ? '#' : route($childLink['route']) }}">
+                                    <i class="bi bi-circle"></i>
+                                    <span>{{ $childLink['name'] }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+            </li>
+        @endforeach
     </ul>
 
 </aside>

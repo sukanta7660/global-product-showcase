@@ -49,6 +49,8 @@
 
     @yield('content')
 
+    @yield('box')
+
 </main><!-- End #main -->
 
 <!-- ======= Footer ======= -->
