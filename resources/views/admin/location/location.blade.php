@@ -57,25 +57,12 @@
         </div>
     </section>
 @endsection
+@push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+@endpush
 @push('js')
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initAutocomplete&libraries=places&v=weekly"
-        defer></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            let autocomplete;
-            let id = 'location';
-
-            autocomplete = new google.maps.places.Autocomplete((document.getElementById(id)), {
-                types: ['geocode'],
-            })
-
-            google.maps.event.addListener(autocomplete, 'place_changed', function() {
-                let place = autocomplete.getPlace();
-                jQuery("#latitude").val(place.geometry.location.lat());
-                jQuery("#longitude").val(place.geometry.location.lng());
-            })
-
-        })
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="{{ asset('admin-assets/plugins/js/activeLeaflet.js') }}"></script>
 @endpush
