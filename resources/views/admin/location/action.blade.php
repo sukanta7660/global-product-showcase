@@ -7,7 +7,8 @@
                 <h5 class="modal-title">Add Location</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="POST">
+            <form action="{{ route('admin.locations.store') }}" method="POST">
+                @csrf
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 mb-3">
@@ -16,7 +17,12 @@
                                 class="form-label">
                                 Location
                             </label>
-                            <input type="text" class="form-control" id="location">
+                            <input
+                                type="text"
+                                name="name"
+                                class="form-control"
+                                required
+                                id="location">
                             <ul id="search-results"></ul>
                         </div>
                         <div class="col-6">
@@ -28,6 +34,7 @@
                             <input
                                 readonly
                                 type="text"
+                                name="latitude"
                                 placeholder="Latitude"
                                 class="form-control"
                                 id="latitude">
@@ -41,6 +48,7 @@
                             <input
                                 type="text"
                                 readonly
+                                name="longitude"
                                 class="form-control"
                                 placeholder="Longitude"
                                 id="longitude">
@@ -52,7 +60,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-sm btn-primary">Save Location</button>
+                    <button type="submit" class="btn btn-sm btn-primary">Save Location</button>
                 </div>
             </form>
         </div>

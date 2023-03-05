@@ -1,3 +1,9 @@
+/*----- utils ----------*/
+.wp-40 {
+    width: 40%;
+}
+/*----- utils ----------*/
+
 /*----- Main Body ------*/
 main#main {
     min-height: 85vh;

@@ -21,8 +21,8 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Location</th>
+                                <th>#</th>
+                                <th class="wp-40" scope="col">Location</th>
                                 <th scope="col">Latitude</th>
                                 <th scope="col">Longitude</th>
                                 <th scope="col"></th>
@@ -31,19 +31,26 @@
                             <tbody>
                                 @foreach($locations as $key => $location)
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td>{{ $location->name }}</td>
+                                        <th scope="col">{{ dateformat($location->created_at, 'd M, Y @ h:i a') }}</th>
+                                        <td class="wp-40">{{ $location->name }}</td>
                                         <td>{{ $location->latitude }}</td>
                                         <td>{{ $location->longitude }}</td>
                                         <td>
-                                            <button
-                                                class="btn btn-sm btn-outline-primary">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                            <button
-                                                class="btn btn-sm btn-outline-danger">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
+                                            <form
+                                                action="{{ route('admin.locations.destroy', $location->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button
+                                                    class="btn btn-sm btn-outline-primary">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-sm btn-outline-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

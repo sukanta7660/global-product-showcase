@@ -11,18 +11,18 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18
 }).addTo(map);
 
-let markers = [
-    {lat: 51.5, lng: -0.09, title: "Marker 1"},
-    {lat: 51.51, lng: -0.1, title: "Marker 2"},
-    {lat: 51.49, lng: -0.08, title: "Marker 3"}
-];
+// let markers = [
+//     {lat: 51.5, lng: -0.09, title: "Marker 1"},
+//     {lat: 51.51, lng: -0.1, title: "Marker 2"},
+//     {lat: 51.49, lng: -0.08, title: "Marker 3"}
+// ];
 
-for (let i = 0; i < markers.length; i++) {
-    let marker = L.marker([markers[i].lat, markers[i].lng], {
-        title: markers[i].title,
-        color: 'red'
-    }).addTo(map);
-}
+// for (let i = 0; i < markers.length; i++) {
+//     let marker = L.marker([markers[i].lat, markers[i].lng], {
+//         title: markers[i].title,
+//         color: 'red'
+//     }).addTo(map);
+// }
 
 let geocoder = L.Control.Geocoder.nominatim();
 
