@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
