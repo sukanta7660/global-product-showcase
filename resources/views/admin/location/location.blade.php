@@ -42,6 +42,9 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button
+                                                    type="button"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#updateModal"
                                                     class="btn btn-sm btn-outline-primary">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
