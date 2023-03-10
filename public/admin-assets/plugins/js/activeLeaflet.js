@@ -45,8 +45,6 @@ searchInput.addEventListener('keyup', function() {
                         // Fly to the selected result
                         map.flyTo(result.center, 15);
 
-                        console.log({'full':result.name, 'road': result.properties.address.road, 'city': result.properties.address.city});
-
                         // Set the latitude and longitude values to the input boxes
                         // fullName.value = result.name
                         searchInput.value = result.name
