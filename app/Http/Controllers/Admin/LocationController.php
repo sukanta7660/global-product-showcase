@@ -22,14 +22,6 @@ class LocationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request, Location $location) :RedirectResponse
@@ -50,27 +42,22 @@ class LocationController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Location $location)
     {
-        //
+        $request->validate([
+            'name' => 'required | unique:locations,name',
+        ]);
+
+        $location->update([
+            'name'      => $request->name,
+            'slug'      => Str::slug($request->name),
+            'latitude'  => $request->latitude,
+            'longitude' => $request->longitude,
+        ]);
+
+        return Redirect::back();
     }
 
     /**

@@ -8,9 +8,10 @@
                     <div class="card-header">
                         <span class="card-title">Locations</span>
                         <button
+                            id="addLocationButton"
                             type="button"
                             data-bs-toggle="modal"
-                            data-bs-target="#createModal"
+                            data-bs-target="#createUpdateModal"
                             class="btn btn-sm btn-outline-primary float-end">
                             <i class="bi bi-plus-circle-dotted"></i>
                             Add Location
@@ -42,10 +43,14 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button
+                                                    data-action="{{ route('admin.locations.update', $location->id) }}"
+                                                    data-name="{{ $location->name }}"
+                                                    data-latitude="{{ $location->latitude }}"
+                                                    data-longitude="{{ $location->longitude }}"
                                                     type="button"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#updateModal"
-                                                    class="btn btn-sm btn-outline-primary">
+                                                    data-bs-target="#createUpdateModal"
+                                                    class="btn btn-sm btn-outline-primary editBtn">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
                                                 <button
@@ -74,5 +79,55 @@
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script>
+        {{--let locations = '{!! $locations !!}';--}}
+        {{--let markers = locations.map(location => {--}}
+        {{--    return {--}}
+        {{--        lat: location.latitude,--}}
+        {{--        lng: location.longitude,--}}
+        {{--        title: location.name--}}
+        {{--    }--}}
+        {{--})--}}
+        $(() => {
+            $('#addLocationButton').click(function (e) {
+                resetForm();
+                e.preventDefault();
+                let formTitle = 'Add Location';
+                let formBtnText = 'Save Location';
+                let formAction = '{{ route('admin.locations.store') }}';
+                let formMethod = 'POST';
+                $('#actionForm #modalTitle').html(formTitle);
+                $('#actionForm #btnSubmit').html(formBtnText);
+                $('#createUpdateForm').attr('method', formMethod).attr('action', formAction);
+                $('#method').attr('disabled', true);
+            });
+            $('.editBtn').click(function (e) {
+                e.preventDefault();
+                let formTitle = 'Update Location';
+                let formBtnText = 'Update Location';
+                let name = $(this).data('name');
+                let latitude = $(this).data('latitude');
+                let longitude = $(this).data('longitude');
+                let formAction = $(this).data('action');
+
+                // populate lat and long
+                long = longitude;
+                lat = latitude;
+                place = name;
+
+                $('#createUpdateModal #modalTitle').html(formTitle);
+                $('#createUpdateModal #btnSubmit').html(formBtnText);
+                $('#createUpdateForm [name=name]').val(name);
+                $('#createUpdateForm [name=latitude]').val(latitude);
+                $('#createUpdateForm [name=longitude]').val(longitude);
+                $('#createUpdateForm').attr('method', 'POST').attr('action', formAction);
+                $('#method').removeAttr('disabled');
+            });
+            resetForm();
+        });
+        function resetForm() {
+            document.getElementById("createUpdateForm").reset();
+        }
+    </script>
     <script src="{{ asset('admin-assets/plugins/js/activeLeaflet.js') }}"></script>
 @endpush
