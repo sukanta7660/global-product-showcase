@@ -4,7 +4,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 id="modalTitle" class="modal-title">Add Location</h5>
+                <h5 id="modalTitle" class="modal-title"></h5>
                 <button
                     onclick="resetForm();"
                     type="button"

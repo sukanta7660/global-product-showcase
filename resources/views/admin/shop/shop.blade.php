@@ -1,12 +1,13 @@
 @extends('layouts.admin')
-@extends('admin.location.action')
+@section('title', 'Shops')
+@extends('admin.shop.action')
 @section('content')
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <span class="card-title">Locations</span>
+                        <span class="card-title">Shops</span>
                         <button
                             id="addLocationButton"
                             type="button"
@@ -14,7 +15,7 @@
                             data-bs-target="#createUpdateModal"
                             class="btn btn-sm btn-outline-primary float-end">
                             <i class="bi bi-plus-circle-dotted"></i>
-                            Add Location
+                            Add Shop
                         </button>
                     </div>
                     <div class="card-body">
@@ -23,30 +24,38 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th class="wp-40" scope="col">Location</th>
-                                <th scope="col">Latitude</th>
-                                <th scope="col">Longitude</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Cell</th>
+                                <th scope="col">Sort</th>
+                                <th scope="col">Status</th>
                                 <th scope="col"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($locations as $key => $location)
+                            @foreach($shops as $key => $shop)
                                 <tr>
-                                    <th scope="col">{{ dateformat($location->created_at, 'd M, Y @ h:i a') }}</th>
-                                    <td class="wp-40">{{ $location->name }}</td>
-                                    <td>{{ $location->latitude }}</td>
-                                    <td>{{ $location->longitude }}</td>
+                                    <th scope="col">{{ dateformat($shop->created_at, 'd M, Y') }}</th>
+                                    <td>{{ $shop->name }}</td>
+                                    <td class="wp-25">{{ $shop->location->name }}</td>
+                                    <td>{{ $shop->cell }}</td>
+                                    <td>{{ $shop->sort }}</td>
+                                    <td>
+                                        <span class="badge badge-{{ $shop->status ? 'success' : 'danger' }}">
+                                            {{ $shop->status ? 'Enabled' : 'Disabled' }}
+                                        </span>
+                                    </td>
                                     <td>
                                         <form
-                                            action="{{ route('admin.locations.destroy', $location->id) }}"
+                                            action="{{ route('admin.shops.destroy', $shop->id) }}"
                                             method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button
-                                                data-action="{{ route('admin.locations.update', $location->id) }}"
-                                                data-name="{{ $location->name }}"
-                                                data-latitude="{{ $location->latitude }}"
-                                                data-longitude="{{ $location->longitude }}"
+                                                data-action="{{ route('admin.locations.update', $shop->id) }}"
+                                                data-name="{{ $shop->name }}"
+                                                data-latitude="{{ $shop->latitude }}"
+                                                data-longitude="{{ $shop->longitude }}"
                                                 type="button"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#createUpdateModal"
@@ -73,38 +82,27 @@
     </section>
 @endsection
 @push('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
 @endpush
 @push('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script>
-        {{--let locations = '{!! $locations !!}';--}}
-        {{--let markers = locations.map(location => {--}}
-        {{--    return {--}}
-        {{--        lat: location.latitude,--}}
-        {{--        lng: location.longitude,--}}
-        {{--        title: location.name--}}
-        {{--    }--}}
-        {{--})--}}
         $(() => {
             $('#addLocationButton').click(function (e) {
                 resetForm();
                 e.preventDefault();
-                let formTitle = 'Add Location';
-                let formBtnText = 'Save Location';
+                let formTitle = 'Add Shop';
+                let formBtnText = 'Save Shop';
                 let formAction = '{{ route('admin.locations.store') }}';
                 let formMethod = 'POST';
-                $('#actionForm #modalTitle').html(formTitle);
-                $('#actionForm #btnSubmit').html(formBtnText);
+                $('#modalTitle').html(formTitle);
+                $('#btnSubmit').html(formBtnText);
                 $('#createUpdateForm').attr('method', formMethod).attr('action', formAction);
                 $('#method').attr('disabled', true);
             });
             $('.editBtn').click(function (e) {
                 e.preventDefault();
-                let formTitle = 'Update Location';
-                let formBtnText = 'Update Location';
+                let formTitle = 'Update Shop';
+                let formBtnText = 'Update Shop';
                 let name = $(this).data('name');
                 let latitude = $(this).data('latitude');
                 let longitude = $(this).data('longitude');

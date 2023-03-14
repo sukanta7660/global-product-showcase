@@ -29,7 +29,6 @@
                                     class="form-control"
                                     required
                                     id="location">
-                                <ul id="search-results"></ul>
                             </div>
                             <div class="col-6">
                                 <label
@@ -58,9 +57,6 @@
                                     class="form-control"
                                     placeholder="Longitude"
                                     id="longitude">
-                            </div>
-                            <div class="col-12 mt-3">
-                                <div id="map"></div>
                             </div>
                         </div>
                     </div>

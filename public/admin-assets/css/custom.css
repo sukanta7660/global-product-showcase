@@ -2,6 +2,18 @@
 .wp-40 {
     width: 40%;
 }
+.wp-25 {
+    width: 25%;
+}
+
+.badge-success {
+    background: #067606;
+}
+
+.badge-danger {
+    background: #9c0626;
+}
+
 /*----- utils ----------*/
 
 /*----- Main Body ------*/

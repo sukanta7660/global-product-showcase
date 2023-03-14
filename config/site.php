@@ -23,7 +23,7 @@ return [
         [
             'name' => 'Shops',
             'icon' => 'bi bi-shop',
-            'route' => null,
+            'route' => 'admin.shops.index',
             'child' => []
         ],
         [
@@ -34,6 +34,7 @@ return [
         ],
     ],
 
+    'AllowedMediaType'   => ['image', 'video', 'pdf'],
     'allowedImageRole'   => [
         'other',
         'shop_logo',

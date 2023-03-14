@@ -97,8 +97,8 @@
                 let formBtnText = 'Save Location';
                 let formAction = '{{ route('admin.locations.store') }}';
                 let formMethod = 'POST';
-                $('#actionForm #modalTitle').html(formTitle);
-                $('#actionForm #btnSubmit').html(formBtnText);
+                $('#modalTitle').html(formTitle);
+                $('#btnSubmit').html(formBtnText);
                 $('#createUpdateForm').attr('method', formMethod).attr('action', formAction);
                 $('#method').attr('disabled', true);
             });
