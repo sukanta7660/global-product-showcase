@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title', 'Location')
 @extends('admin.location.action')
 @section('content')
     <section class="section">

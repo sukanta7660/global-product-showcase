@@ -32,5 +32,18 @@ return [
             'route' => 'admin.locations.index',
             'child' => []
         ],
-    ]
+    ],
+
+    'allowedImageRole'   => [
+        'other',
+        'shop_logo',
+        'brand_logo',
+        'shop_banner',
+        'brand_banner',
+        'product_images',
+        'slider',
+        'slide',
+        'slide_small',
+        'blog_banner'
+    ],
 ];

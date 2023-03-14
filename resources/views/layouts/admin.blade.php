@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>{{ config('site.siteTitle') }}</title>
+    <title>@hasSection('title') @yield('title') || @endif{{ config('site.siteTitle') }}</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <!-- Favicons -->
@@ -37,16 +37,6 @@
 <!-- End Sidebar-->
 
 <main id="main" class="main">
-
-    <div class="pagetitle">
-        <h1>Dashboard</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
 
     @yield('content')
 
