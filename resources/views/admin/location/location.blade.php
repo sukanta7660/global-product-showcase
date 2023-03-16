@@ -20,11 +20,11 @@
                     </div>
                     <div class="card-body">
                         <!-- Table with stripped rows -->
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="dataTable">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th class="wp-40" scope="col">Location</th>
+                                <th class="wp-20" scope="col">Location</th>
                                 <th scope="col">Latitude</th>
                                 <th scope="col">Longitude</th>
                                 <th scope="col"></th>
@@ -34,7 +34,7 @@
                                 @foreach($locations as $key => $location)
                                     <tr>
                                         <th scope="col">{{ dateformat($location->created_at, 'd M, Y @ h:i a') }}</th>
-                                        <td class="wp-40">{{ $location->name }}</td>
+                                        <td class="wp-20">{{ $location->name }}</td>
                                         <td>{{ $location->latitude }}</td>
                                         <td>{{ $location->longitude }}</td>
                                         <td>

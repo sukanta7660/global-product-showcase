@@ -35,7 +35,7 @@ class ShopController extends Controller
             'sort' => 'integer',
         ]);
 
-        $created = $shop->create($request->all());
+        $shop->create($request->all());
 
         return Redirect::back();
     }

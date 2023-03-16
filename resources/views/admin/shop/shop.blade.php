@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Shops')
 @extends('admin.shop.action')
+@section('title', 'Shops')
 @section('content')
     <section class="section">
         <div class="row">
@@ -20,12 +20,12 @@
                     </div>
                     <div class="card-body">
                         <!-- Table with stripped rows -->
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="dataTable">
                             <thead>
                             <tr>
                                 <th>#</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Address</th>
+                                <th class="wp-20" scope="col">Address</th>
                                 <th scope="col">Cell</th>
                                 <th scope="col">Sort</th>
                                 <th scope="col">Status</th>
@@ -36,8 +36,8 @@
                             @foreach($shops as $key => $shop)
                                 <tr>
                                     <th scope="col">{{ dateformat($shop->created_at, 'd M, Y') }}</th>
-                                    <td>{{ $shop->name }}</td>
-                                    <td class="wp-25">{{ $shop->location->name }}</td>
+                                    <td class="wp-20">{{ $shop->name }}</td>
+                                    <td class="wp-20">{{ $shop->location->name }}</td>
                                     <td>{{ $shop->cell }}</td>
                                     <td>{{ $shop->sort }}</td>
                                     <td>
