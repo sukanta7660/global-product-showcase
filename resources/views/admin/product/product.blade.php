@@ -139,11 +139,24 @@
                 $('#createUpdateForm').attr('method', 'POST').attr('action', formAction);
                 $('#method').removeAttr('disabled');
             });
+            enableDisableDiscountPrice();
             resetForm();
             addSlug();
         });
         function resetForm() {
             document.getElementById("createUpdateForm").reset();
+        }
+
+        function enableDisableDiscountPrice () {
+            let checkBox = document.getElementById('discount_enabled');
+            if(checkBox.checked) {
+                $('#discount_price').attr('required', true);
+                $('#discount_price').prop('disabled', false);
+            } else {
+                $('#discount_price').val('');
+                $('#discount_price').removeAttr('required');
+                $('#discount_price').prop('disabled', true);
+            }
         }
 
         function addSlug () {

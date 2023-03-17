@@ -61,29 +61,63 @@
                             </div>
                             <div class="col-6 mb-3">
                                 <label
-                                    for="email"
+                                    for="price"
                                     class="form-label">
-                                    Email
+                                    Price
                                 </label>
                                 <input
-                                    type="email"
-                                    name="email"
-                                    placeholder="Email"
+                                    type="number"
+                                    name="price"
+                                    min="0"
+                                    required
+                                    placeholder="Price"
                                     class="form-control"
-                                    id="email">
+                                    id="price">
                             </div>
                             <div class="col-6 mb-3">
                                 <label
-                                    for="cell"
+                                    for="quantity"
                                     class="form-label">
-                                    Cell
+                                    Quantity
                                 </label>
                                 <input
                                     type="text"
-                                    name="cell"
+                                    name="quantity"
+                                    required
                                     class="form-control"
-                                    placeholder="Cell No"
-                                    id="cell">
+                                    placeholder="Quantity"
+                                    id="quantity">
+                            </div>
+                            <div class="col-6">
+                                <label
+                                    class="form-label">
+                                    Discount Enable?
+                                </label><br>
+                                <label class="switch">
+                                    <input
+                                        id="discount_enabled"
+                                        type="checkbox"
+                                        name="discount_enabled"
+                                        onclick="enableDisableDiscountPrice()"
+                                        value="0"
+                                    >
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label
+                                    for="discount_price"
+                                    class="form-label">
+                                    Discount Price
+                                </label>
+                                <input
+                                    type="number"
+                                    name="discount_price"
+                                    min="0"
+                                    required
+                                    placeholder="Discount Price"
+                                    class="form-control"
+                                    id="discount_price">
                             </div>
                             <div class="col-6">
                                 <label
