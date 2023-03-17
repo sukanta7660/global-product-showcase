@@ -24,6 +24,7 @@ class ProductFactory extends Factory
         return [
             'shop_id'           => $shop->id,
             'name'              => $name,
+            'description'       => $this->faker->paragraph,
             'slug'              => Str::slug($name),
             'quantity'          => rand(10, 100).' '.$this->faker->word,
             'price'             => $this->faker->randomElement([100, 200, 500]),

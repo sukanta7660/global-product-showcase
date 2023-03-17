@@ -119,7 +119,6 @@
                 let formAction = $(this).data('action');
 
                 if(status) {
-                    console.log(status)
                     $('#createUpdateForm [name=status]').attr('checked', true);
                 }else {
                     $('#createUpdateForm [name=status]').attr('checked', false);

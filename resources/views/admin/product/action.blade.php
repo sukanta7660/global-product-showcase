@@ -52,7 +52,7 @@
                                     Description
                                 </label>
                                 <textarea
-                                    name="about"
+                                    name="description"
                                     id="description"
                                     cols="10"
                                     rows="5"
@@ -85,39 +85,25 @@
                                     placeholder="Cell No"
                                     id="cell">
                             </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <label
-                                    for="location_id"
+                                    for="shop_id"
                                     class="form-label">
-                                    Location
+                                    Shop
                                 </label>
                                 <select
                                     class="form-control"
-                                    name="location_id"
-                                    id="location_id">
-                                    <option value="">Select a Location</option>
-                                    @foreach($locations as $location)
-                                        <option value="{{ $location->id }}">
-                                            {{ $location->name }}
+                                    name="shop_id"
+                                    id="shop_id">
+                                    <option value="">Select a Shop</option>
+                                    @foreach($shops as $shop)
+                                        <option value="{{ $shop->id }}">
+                                            {{ $shop->name }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-4">
-                                <label
-                                    for="sort"
-                                    class="form-label">
-                                    Sort
-                                </label>
-                                <input
-                                    type="number"
-                                    name="sort"
-                                    class="form-control"
-                                    placeholder="Sort"
-                                    min="0"
-                                    id="sort">
-                            </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <label
                                     for="status"
                                     class="form-label">

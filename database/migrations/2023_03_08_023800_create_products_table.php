@@ -23,6 +23,8 @@ return new class extends Migration
             $table->boolean('discount_enabled')->default(false);
             $table->integer('discount_price')->default(0);
 
+            $table->longText('description')->nullable();
+
             $table->boolean('status')->default(true);
             $table->softDeletes();
             $table->timestamps();
