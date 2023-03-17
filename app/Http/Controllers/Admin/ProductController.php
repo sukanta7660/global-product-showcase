@@ -26,15 +26,15 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Shop $shop) :RedirectResponse
+    public function store(Request $request, Product $product) :RedirectResponse
     {
         $this->validateData($request);
 
-        $shop->create($request->all());
-
-        if (!isset($request->status)) {
-            $shop->update(['status' => false]);
-        }
+        $product->create(array_merge($request->all(), [
+            'discount_enabled' => isset($request->discount_enabled),
+            'discount_price' => isset($request->discount_enabled) ? $request->discount_price : 0,
+            'status' => isset($request->status),
+        ]));
 
         return Redirect::back();
     }
@@ -42,15 +42,15 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Shop $shop) :RedirectResponse
+    public function update(Request $request, Product $product) :RedirectResponse
     {
-        $this->validateData($request, $shop);
+        $this->validateData($request, $product);
 
-        $shop->update($request->except(['_token', '_method']));
-
-        if (!isset($request->status)) {
-            $shop->update(['status' => false]);
-        }
+        $product->update(array_merge($request->except(['_token', '_method']), [
+            'discount_enabled' => isset($request->discount_enabled),
+            'discount_price' => isset($request->discount_enabled) ? $request->discount_price : 0,
+            'status' => isset($request->status),
+        ]));
 
         return Redirect::back();
     }
@@ -58,30 +58,31 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Shop $shop) :RedirectResponse
+    public function destroy(Product $product) :RedirectResponse
     {
-        $shop->delete();
+        $product->delete();
         return Redirect::back();
     }
 
-    private function validateData($request, $shop = null) :void
+    private function validateData($request, $product = null) :void
     {
         $uniqueName = ($request->method() == 'PATCH')
-            ? "unique:shops,name,{$shop->id}"
-            : 'unique:shops,name';
+            ? "unique:products,name,{$product->id}"
+            : 'unique:products,name';
         $uniqueSlug = ($request->method() == 'PATCH')
-            ? "unique:shops,slug,{$shop->id}"
-            : 'unique:shops,slug';
+            ? "unique:products,slug,{$product->id}"
+            : 'unique:products,slug';
 
         $request->validate([
-            'location_id' => 'required|exists:locations,id',
-            'name' => "required|string|min:3|max:35|{$uniqueName}",
-            'slug' => "required|string|min:3|max:50|{$uniqueSlug}",
-            'about' => 'nullable|string',
-            'cell' => 'required|string',
-            'email' => 'required|email',
-            'sort' => 'integer',
-            'status' => 'boolean'
+            'shop_id'           => 'required|exists:shops,id',
+            'name'              => "required|string|min:3|max:35|{$uniqueName}",
+            'slug'              => "required|string|min:3|max:50|{$uniqueSlug}",
+            'description'       => 'nullable|string',
+            'price'             => 'required|numeric',
+            'quantity'          => 'required|string',
+            'discount_enabled'  => 'boolean',
+            'discount_price'    => 'nullable|numeric',
+            'status'            => 'boolean'
         ]);
     }
 }

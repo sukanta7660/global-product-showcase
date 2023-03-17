@@ -49,19 +49,20 @@
                                     </td>
                                     <td>
                                         <form
-                                            action="{{ route('admin.shops.destroy', $product->id) }}"
+                                            action="{{ route('admin.products.destroy', $product->id) }}"
                                             method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button
-                                                data-action="{{ route('admin.shops.update', $product->id) }}"
+                                                data-action="{{ route('admin.products.update', $product->id) }}"
                                                 data-name="{{ $product->name }}"
                                                 data-slug="{{ $product->slug }}"
                                                 data-description="{{ $product->description }}"
-                                                data-cell="{{ $product->cell }}"
-                                                data-email="{{ $product->email }}"
-                                                data-location="{{ $product->location_id }}"
-                                                data-sort="{{ $product->sort }}"
+                                                data-price="{{ $product->price }}"
+                                                data-quantity="{{ $product->quantity }}"
+                                                data-shop="{{ $product->shop_id }}"
+                                                data-discountenabled="{{ $product->discount_enabled }}"
+                                                data-discountprice="{{ $product->discount_price }}"
                                                 data-status="{{ $product->status }}"
                                                 type="button"
                                                 data-bs-toggle="modal"
@@ -112,13 +113,28 @@
                 let formBtnText = 'Update Product';
                 let name = $(this).data('name');
                 let slug = $(this).data('slug');
-                let cell = $(this).data('cell');
-                let email = $(this).data('email');
-                let location = $(this).data('location');
+                let price = $(this).data('price');
+                let quantity = $(this).data('quantity');
+                let shop = $(this).data('shop');
+                let discountEnabled = $(this).data('discountenabled');
+                let discountPrice = $(this).data('discountprice');
                 let sort = $(this).data('sort');
                 let status = $(this).data('status');
                 let description = $(this).data('description');
                 let formAction = $(this).data('action');
+
+
+                if(discountEnabled) {
+                    $('#createUpdateForm [name=discount_enabled]').attr('checked', true);
+                    $('#createUpdateForm [name=discount_price]').val(discountPrice);
+                    $('#discount_price').attr('required', true);
+                    $('#discount_price').prop('disabled', false);
+                }else {
+                    $('#createUpdateForm [name=discount_enabled]').attr('checked', false);
+                    $('#discount_price').val(0);
+                    $('#discount_price').removeAttr('required');
+                    $('#discount_price').prop('disabled', true);
+                }
 
                 if(status) {
                     $('#createUpdateForm [name=status]').attr('checked', true);
@@ -130,9 +146,9 @@
                 $('#createUpdateModal #btnSubmit').html(formBtnText);
                 $('#createUpdateForm [name=name]').val(name);
                 $('#createUpdateForm [name=slug]').val(slug);
-                $('#createUpdateForm [name=cell]').val(cell);
-                $('#createUpdateForm [name=email]').val(email);
-                $('#createUpdateForm [name=location_id]').val(location);
+                $('#createUpdateForm [name=price]').val(price);
+                $('#createUpdateForm [name=quantity]').val(quantity);
+                $('#createUpdateForm [name=shop_id]').val(shop);
                 $('#createUpdateForm [name=sort]').val(sort);
 
                 $('#createUpdateForm [name=description]').html(description);
@@ -145,6 +161,7 @@
         });
         function resetForm() {
             document.getElementById("createUpdateForm").reset();
+            document.getElementById("description").innerHTML = '';
         }
 
         function enableDisableDiscountPrice () {
@@ -153,7 +170,7 @@
                 $('#discount_price').attr('required', true);
                 $('#discount_price').prop('disabled', false);
             } else {
-                $('#discount_price').val('');
+                $('#discount_price').val(0);
                 $('#discount_price').removeAttr('required');
                 $('#discount_price').prop('disabled', true);
             }
