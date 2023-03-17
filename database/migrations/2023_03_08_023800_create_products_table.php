@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('shop_id')->constrained('shops');
 
             $table->string('name');
+            $table->string('slug')->unique();
             $table->integer('price')->default(0);
             $table->string('quantity');
 
