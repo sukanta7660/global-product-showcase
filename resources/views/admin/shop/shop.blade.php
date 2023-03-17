@@ -20,7 +20,7 @@
                     </div>
                     <div class="card-body">
                         <!-- Table with stripped rows -->
-                        <table class="table table-striped" id="dataTable">
+                        <table class="table table-striped" id="">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -52,10 +52,15 @@
                                             @csrf
                                             @method('DELETE')
                                             <button
-                                                data-action="{{ route('admin.locations.update', $shop->id) }}"
+                                                data-action="{{ route('admin.shops.update', $shop->id) }}"
                                                 data-name="{{ $shop->name }}"
-                                                data-latitude="{{ $shop->latitude }}"
-                                                data-longitude="{{ $shop->longitude }}"
+                                                data-slug="{{ $shop->slug }}"
+                                                data-description="{{ $shop->about }}"
+                                                data-cell="{{ $shop->cell }}"
+                                                data-email="{{ $shop->email }}"
+                                                data-location="{{ $shop->location_id }}"
+                                                data-sort="{{ $shop->sort }}"
+                                                data-status="{{ $shop->status }}"
                                                 type="button"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#createUpdateModal"
@@ -74,7 +79,7 @@
                             </tbody>
                         </table>
                         <!-- End Table with stripped rows -->
-
+                        {{ $shops->links() }}
                     </div>
                 </div>
             </div>
@@ -92,7 +97,7 @@
                 e.preventDefault();
                 let formTitle = 'Add Shop';
                 let formBtnText = 'Save Shop';
-                let formAction = '{{ route('admin.locations.store') }}';
+                let formAction = '{{ route('admin.shops.store') }}';
                 let formMethod = 'POST';
                 $('#modalTitle').html(formTitle);
                 $('#btnSubmit').html(formBtnText);
@@ -104,28 +109,47 @@
                 let formTitle = 'Update Shop';
                 let formBtnText = 'Update Shop';
                 let name = $(this).data('name');
-                let latitude = $(this).data('latitude');
-                let longitude = $(this).data('longitude');
+                let slug = $(this).data('slug');
+                let cell = $(this).data('cell');
+                let email = $(this).data('email');
+                let location = $(this).data('location');
+                let sort = $(this).data('sort');
+                let status = $(this).data('status');
+                let description = $(this).data('description');
                 let formAction = $(this).data('action');
 
-                // populate lat and long
-                long = longitude;
-                lat = latitude;
-                place = name;
+                if(status) {
+                    console.log(status)
+                    $('#createUpdateForm [name=status]').attr('checked', true);
+                }else {
+                    $('#createUpdateForm [name=status]').attr('checked', false);
+                }
 
                 $('#createUpdateModal #modalTitle').html(formTitle);
                 $('#createUpdateModal #btnSubmit').html(formBtnText);
                 $('#createUpdateForm [name=name]').val(name);
-                $('#createUpdateForm [name=latitude]').val(latitude);
-                $('#createUpdateForm [name=longitude]').val(longitude);
+                $('#createUpdateForm [name=slug]').val(slug);
+                $('#createUpdateForm [name=cell]').val(cell);
+                $('#createUpdateForm [name=email]').val(email);
+                $('#createUpdateForm [name=location_id]').val(location);
+                $('#createUpdateForm [name=sort]').val(sort);
+
+                $('#createUpdateForm [name=about]').html(description);
                 $('#createUpdateForm').attr('method', 'POST').attr('action', formAction);
                 $('#method').removeAttr('disabled');
             });
             resetForm();
+            addSlug();
         });
         function resetForm() {
             document.getElementById("createUpdateForm").reset();
         }
+
+        function addSlug () {
+            let inputText = $('#createUpdateForm #name').val();
+            let slug = slugify(inputText);
+            $('#createUpdateForm #slug').val(slug);
+        }
+
     </script>
-    <script src="{{ asset('admin-assets/plugins/js/activeLeaflet.js') }}"></script>
 @endpush

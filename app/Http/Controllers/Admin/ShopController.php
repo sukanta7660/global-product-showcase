@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Location;
 use App\Models\Shop;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,8 +17,9 @@ class ShopController extends Controller
      */
     public function index() :View
     {
-        $shops = Shop::latest()->get();
-        return view('admin.shop.shop', compact('shops'));
+        $shops = Shop::latest()->paginate(10);
+        $locations = Location::whereStatus(1)->get();
+        return view('admin.shop.shop', compact('shops', 'locations'));
     }
 
     /**
@@ -25,17 +27,13 @@ class ShopController extends Controller
      */
     public function store(Request $request, Shop $shop) :RedirectResponse
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'name' => 'required|string|min:3|max:35|unique:shops,name',
-            'slug' => 'required|string|min:3|max:50|unique:shops,slug',
-            'about' => 'nullable|string',
-            'cell' => 'required|string',
-            'email' => 'required|email',
-            'sort' => 'integer',
-        ]);
+        $this->validateData($request);
 
         $shop->create($request->all());
+
+        if (!isset($request->status)) {
+            $shop->update(['status' => false]);
+        }
 
         return Redirect::back();
     }
@@ -45,19 +43,16 @@ class ShopController extends Controller
      */
     public function update(Request $request, Shop $shop) :RedirectResponse
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'name' => 'required|string|min:3|max:35|unique:shops,name'.$shop->id,
-            'slug' => 'required|string|min:3|max:50|unique:shops,slug'.$shop->id,
-            'about' => 'nullable|string',
-            'cell' => 'required|string',
-            'email' => 'required|email',
-            'sort' => 'integer',
-        ]);
+        $this->validateData($request, $shop);
 
-        $created = $shop->update($request->all());
+        $shop->update($request->except(['_token', '_method']));
 
-        return Redirect::back();    }
+        if (!isset($request->status)) {
+            $shop->update(['status' => false]);
+        }
+
+        return Redirect::back();
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -68,15 +63,24 @@ class ShopController extends Controller
         return Redirect::back();
     }
 
-    private function validateData($request, $shop) {
+    private function validateData($request, $shop = null) :void
+    {
+        $uniqueName = ($request->method() == 'PATCH')
+            ? "unique:shops,name,{$shop->id}"
+            : 'unique:shops,name';
+        $uniqueSlug = ($request->method() == 'PATCH')
+            ? "unique:shops,slug,{$shop->id}"
+            : 'unique:shops,slug';
+
         $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'name' => 'required|string|min:3|max:35|unique:shops,name'.$shop?->id,
-            'slug' => 'required|string|min:3|max:50|unique:shops,slug'.$shop->id,
+            'location_id' => 'required|exists:locations,id',
+            'name' => "required|string|min:3|max:35|{$uniqueName}",
+            'slug' => "required|string|min:3|max:50|{$uniqueSlug}",
             'about' => 'nullable|string',
             'cell' => 'required|string',
             'email' => 'required|email',
             'sort' => 'integer',
+            'status' => 'boolean'
         ]);
     }
 }

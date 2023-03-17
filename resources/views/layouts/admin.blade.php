@@ -55,6 +55,7 @@
 <script src="{{ asset('admin-assets/vendor/php-email-form/validate.js') }}"></script>
 <script src="{{ asset('admin-assets/js/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('admin-assets/js/main.js') }}"></script>
+<script src="{{ asset('admin-assets/js/custom.js') }}"></script>
 <script>
     $(function () {
         new DataTable('#dataTable');
