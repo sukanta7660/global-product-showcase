@@ -18,10 +18,15 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         $shop = $this->faker->randomElement(Shop::all());
+        $discountEnable = $this->faker->boolean();
         return [
-            'name'      => $this->faker->word,
-            'price'     => $this->faker->randomElement([100, 200, 500]),
-            'shop_id'   => $shop->id
+            'shop_id'           => $shop->id,
+            'name'              => $this->faker->word,
+            'quantity'          => rand(10, 100).' '.$this->faker->unique()->word,
+            'price'             => $this->faker->randomElement([100, 200, 500]),
+            'discount_enabled'  => $discountEnable,
+            'discount_price'    => $discountEnable ? rand(100, 1000) : 0,
+            'status'            => $this->faker->boolean()
         ];
     }
 }

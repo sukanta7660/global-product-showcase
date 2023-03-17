@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('location_id')->constrained('locations');
             $table->integer('sort')->default(0);
             $table->boolean('status')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

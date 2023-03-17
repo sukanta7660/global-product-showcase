@@ -17,7 +17,7 @@ return [
         [
             'name' => 'Products',
             'icon' => 'bi bi-minecart-loaded',
-            'route' => null,
+            'route' => 'admin.products.index',
             'child' => []
         ],
         [
