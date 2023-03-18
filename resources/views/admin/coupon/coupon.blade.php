@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@extends('admin.shop.action')
-@section('title', 'Shops')
+@extends('admin.coupon.action')
+@section('title', 'Coupons')
 @section('content')
     <section class="section">
         <div class="row">
@@ -27,7 +27,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <span class="card-title">Shops</span>
+                        <span class="card-title">Coupons</span>
                         <button
                             id="addLocationButton"
                             type="button"
@@ -35,7 +35,7 @@
                             data-bs-target="#createUpdateModal"
                             class="btn btn-sm btn-outline-primary float-end">
                             <i class="bi bi-plus-circle-dotted"></i>
-                            Add Shop
+                            Add Coupon
                         </button>
                     </div>
                     <div class="card-body">
@@ -44,43 +44,43 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th scope="col">Name</th>
-                                <th class="wp-20" scope="col">Address</th>
-                                <th scope="col">Cell</th>
-                                <th scope="col">Sort</th>
+                                <th scope="col">Code</th>
+                                <th class="wp-20" scope="col">Shop</th>
+                                <th scope="col">Coupon Price</th>
+                                <th scope="col">From</th>
+                                <th scope="col">To</th>
                                 <th scope="col">Status</th>
                                 <th scope="col"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($shops as $key => $shop)
+                            @foreach($coupons as $key => $coupon)
                                 <tr>
-                                    <th scope="col">{{ dateformat($shop->created_at, 'd M, Y') }}</th>
-                                    <td class="wp-20">{{ $shop->name }}</td>
-                                    <td class="wp-20">{{ $shop->location->name }}</td>
-                                    <td>{{ $shop->cell }}</td>
-                                    <td>{{ $shop->sort }}</td>
+                                    <th scope="col">{{ dateformat($coupon->created_at, 'd M, Y') }}</th>
+                                    <td class="wp-20 text-uppercase">{{ $coupon->coupon_code }}</td>
+                                    <td class="wp-20 text-capitalize">{{ $coupon->shop->name }}</td>
+                                    <td>{{ getCurrencyFormat($coupon->coupon_price) }}</td>
+                                    <td>{{ dateformat($coupon->from, 'd M, Y') }}</td>
+                                    <td>{{ dateformat($coupon->to, 'd M, Y') }}</td>
                                     <td>
-                                        <span class="badge badge-{{ $shop->status ? 'success' : 'danger' }}">
-                                            {{ $shop->status ? 'Enabled' : 'Disabled' }}
+                                        <span class="badge badge-{{ $coupon->status ? 'success' : 'danger' }}">
+                                            {{ $coupon->status ? 'Enabled' : 'Disabled' }}
                                         </span>
                                     </td>
                                     <td>
                                         <form
-                                            action="{{ route('admin.shops.destroy', $shop->id) }}"
+                                            action="{{ route('admin.shops.destroy', $coupon->id) }}"
                                             method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button
-                                                data-action="{{ route('admin.shops.update', $shop->id) }}"
-                                                data-name="{{ $shop->name }}"
-                                                data-slug="{{ $shop->slug }}"
-                                                data-description="{{ $shop->about }}"
-                                                data-cell="{{ $shop->cell }}"
-                                                data-email="{{ $shop->email }}"
-                                                data-location="{{ $shop->location_id }}"
-                                                data-sort="{{ $shop->sort }}"
-                                                data-status="{{ $shop->status }}"
+                                                data-action="{{ route('admin.coupons.update', $coupon->id) }}"
+                                                data-code="{{ $coupon->coupon_code }}"
+                                                data-price="{{ $coupon->coupon_price }}"
+                                                data-shop="{{ $coupon->shop_id }}"
+                                                data-from="{{ $coupon->from }}"
+                                                data-to="{{ $coupon->to }}"
+                                                data-status="{{ $coupon->status }}"
                                                 type="button"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#createUpdateModal"
@@ -99,7 +99,7 @@
                             </tbody>
                         </table>
                         <!-- End Table with stripped rows -->
-                        {{ $shops->links() }}
+                        {{ $coupons->links() }}
                     </div>
                 </div>
             </div>
@@ -115,9 +115,9 @@
             $('#addLocationButton').click(function (e) {
                 resetForm();
                 e.preventDefault();
-                let formTitle = 'Add Shop';
-                let formBtnText = 'Save Shop';
-                let formAction = '{{ route('admin.shops.store') }}';
+                let formTitle = 'Add Coupon';
+                let formBtnText = 'Save Coupon';
+                let formAction = '{{ route('admin.coupons.store') }}';
                 let formMethod = 'POST';
                 $('#modalTitle').html(formTitle);
                 $('#btnSubmit').html(formBtnText);
@@ -126,16 +126,14 @@
             });
             $('.editBtn').click(function (e) {
                 e.preventDefault();
-                let formTitle = 'Update Shop';
-                let formBtnText = 'Update Shop';
-                let name = $(this).data('name');
-                let slug = $(this).data('slug');
-                let cell = $(this).data('cell');
-                let email = $(this).data('email');
-                let location = $(this).data('location');
-                let sort = $(this).data('sort');
+                let formTitle = 'Update Coupon';
+                let formBtnText = 'Update Coupon';
+                let code = $(this).data('code');
+                let price = $(this).data('price');
+                let from = $(this).data('from');
+                let to = $(this).data('to');
+                let shop = $(this).data('shop');
                 let status = $(this).data('status');
-                let description = $(this).data('description');
                 let formAction = $(this).data('action');
 
                 if(status) {
@@ -146,28 +144,26 @@
 
                 $('#createUpdateModal #modalTitle').html(formTitle);
                 $('#createUpdateModal #btnSubmit').html(formBtnText);
-                $('#createUpdateForm [name=name]').val(name);
-                $('#createUpdateForm [name=slug]').val(slug);
-                $('#createUpdateForm [name=cell]').val(cell);
-                $('#createUpdateForm [name=email]').val(email);
-                $('#createUpdateForm [name=location_id]').val(location);
-                $('#createUpdateForm [name=sort]').val(sort);
+                $('#createUpdateForm [name=coupon_code]').val(code);
+                $('#createUpdateForm [name=coupon_price]').val(price);
+                $('#createUpdateForm [name=from]').val(from);
+                $('#createUpdateForm [name=to]').val(to);
+                $('#createUpdateForm [name=shop_id]').val(shop);
 
-                $('#createUpdateForm [name=about]').html(description);
                 $('#createUpdateForm').attr('method', 'POST').attr('action', formAction);
                 $('#method').removeAttr('disabled');
             });
             resetForm();
-            addSlug();
+            formatCouponCode();
         });
         function resetForm() {
             document.getElementById("createUpdateForm").reset();
         }
 
-        function addSlug () {
-            let inputText = $('#createUpdateForm #name').val();
-            let slug = slugify(inputText);
-            $('#createUpdateForm #slug').val(slug);
+        function formatCouponCode () {
+            let inputField = $('#createUpdateForm #coupon_code');
+            let toUpper = inputField.val().trim().toUpperCase();
+            inputField.val(toUpper);
         }
 
     </script>

@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'siteTitle' => 'App Name',
+    'siteSortTitle' => 'Smart Shoppers',
+    'siteTitle' => 'Smart Shoppers United LLC',
     'copyright' => 'copyright text',
     'contactNo' => '+8165464656546',
     'email'     => 'info@sitedomain.com',
@@ -17,7 +18,13 @@ return [
         [
             'name' => 'Products',
             'icon' => 'bi bi-minecart-loaded',
-            'route' => null,
+            'route' => 'admin.products.index',
+            'child' => []
+        ],
+        [
+            'name' => 'Coupons',
+            'icon' => 'bi bi-tag',
+            'route' => 'admin.coupons.index',
             'child' => []
         ],
         [
@@ -31,6 +38,21 @@ return [
             'icon' => 'bi bi-geo-fill',
             'route' => 'admin.locations.index',
             'child' => []
+        ],
+        [
+            'name' => 'Members',
+            'icon' => 'bi bi-people-fill',
+            'route' => null,
+            'child' => [
+                [
+                    'name'  => 'Users',
+                    'route' => 'admin.all.users'
+                ],
+                [
+                    'name'  => 'Admins',
+                    'route' => 'admin.all.admins'
+                ],
+            ]
         ],
     ],
 

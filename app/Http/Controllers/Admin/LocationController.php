@@ -17,7 +17,7 @@ class LocationController extends Controller
      */
     public function index() :View
     {
-        $locations = Location::latest()->get();
+        $locations = Location::latest()->paginate(10);
         return view('admin.location.location', compact('locations'));
     }
 

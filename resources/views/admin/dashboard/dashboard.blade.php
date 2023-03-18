@@ -20,7 +20,7 @@
                                         <i class="bi bi-cart"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>145</h6>
+                                        <h6>{{ count($products) }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -39,7 +39,7 @@
                                         <i class="bi bi-shop"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>150</h6>
+                                        <h6>{{ count($shops) }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                         <i class="bi bi-map"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>1244</h6>
+                                        <h6>{{ count($locations) }}</h6>
                                     </div>
                                 </div>
 
