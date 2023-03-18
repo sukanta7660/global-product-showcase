@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ShopController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -28,3 +29,11 @@ Route::resource('shops', ShopController::class)
 Route::resource('locations', LocationController::class)
     ->except(['create', 'edit', 'show'])
 ;
+
+/*-----Member Routes-------*/
+Route::prefix('all')->name('all.')->group(function () {
+    Route::get('users', [UserController::class, 'index'])->name('users');
+    Route::get('admins', [UserController::class, 'admins'])->name('admins');
+});
+Route::delete('user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+/*-----Member Routes-------*/

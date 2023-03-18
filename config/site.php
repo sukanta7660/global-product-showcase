@@ -38,6 +38,21 @@ return [
             'route' => 'admin.locations.index',
             'child' => []
         ],
+        [
+            'name' => 'Members',
+            'icon' => 'bi bi-people-fill',
+            'route' => null,
+            'child' => [
+                [
+                    'name'  => 'Users',
+                    'route' => 'admin.all.users'
+                ],
+                [
+                    'name'  => 'Admins',
+                    'route' => 'admin.all.admins'
+                ],
+            ]
+        ],
     ],
 
     'AllowedMediaType'   => ['image', 'video', 'pdf'],

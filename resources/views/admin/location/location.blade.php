@@ -40,7 +40,7 @@
                     </div>
                     <div class="card-body">
                         <!-- Table with stripped rows -->
-                        <table class="table table-striped" id="dataTable">
+                        <table class="table table-striped">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -87,6 +87,7 @@
                         </table>
                         <!-- End Table with stripped rows -->
 
+                        {{ $locations->links() }}
                     </div>
                 </div>
             </div>
