@@ -5,6 +5,26 @@
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
+
+                <!--Error Message-->
+                @if ($errors->any())
+                    <div class="card">
+                        <div class="card-header">
+                            Please fill the form correctly
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-danger mt-3">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                <!-- Error Message-->
+
                 <div class="card">
                     <div class="card-header">
                         <span class="card-title">Shops</span>

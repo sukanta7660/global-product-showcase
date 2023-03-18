@@ -5,6 +5,8 @@
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
+
+                <!--Error Message-->
                 @if ($errors->any())
                     <div class="card">
                         <div class="card-header">
@@ -21,6 +23,8 @@
                         </div>
                     </div>
                 @endif
+                <!-- Error Message-->
+
                 <div class="card">
                     <div class="card-header">
                         <span class="card-title">Coupons</span>
