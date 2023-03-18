@@ -21,6 +21,12 @@ return [
             'child' => []
         ],
         [
+            'name' => 'Coupons',
+            'icon' => 'bi bi-tag',
+            'route' => 'admin.coupons.index',
+            'child' => []
+        ],
+        [
             'name' => 'Shops',
             'icon' => 'bi bi-shop',
             'route' => 'admin.shops.index',
