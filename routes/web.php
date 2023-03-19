@@ -15,7 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
+});
+
+Route::get('/clear', function(){
+    \Artisan::call('optimize');
+    \Artisan::call('route:clear');
+    \Artisan::call('cache:clear');
+    \Artisan::call('view:clear');
+    \Artisan::call('config:clear');
+    return 'cleared';
 });
 
 Route::get('/dashboard', function () {
