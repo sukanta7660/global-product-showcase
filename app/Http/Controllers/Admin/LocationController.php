@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Location;
+use Helper;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use function Pest\Laravel\delete;
 
 class LocationController extends Controller
 {
@@ -30,14 +33,23 @@ class LocationController extends Controller
             'name' => 'required | unique:locations,name'
         ]);
 
-        $location->create([
-            'name'      => $request->name,
-            'slug'      => Str::slug($request->name),
-            'latitude'  => $request->latitude,
-            'longitude' => $request->longitude,
-        ]);
+        try {
 
-        return Redirect::back();
+            $location->create([
+                'name'      => $request->name,
+                'slug'      => Str::slug($request->name),
+                'latitude'  => $request->latitude,
+                'longitude' => $request->longitude,
+            ]);
+
+        } catch (QueryException $exception) {
+            return Helper::sendResponse(500, 'error', 'Error', $exception->getMessage());
+        }
+
+        return Helper::sendResponse(200,
+            'success',
+            'Success',
+            'Location Successfully Created');
 
     }
 
@@ -50,14 +62,23 @@ class LocationController extends Controller
             'name' => 'required | unique:locations,name',
         ]);
 
-        $location->update([
-            'name'      => $request->name,
-            'slug'      => Str::slug($request->name),
-            'latitude'  => $request->latitude,
-            'longitude' => $request->longitude,
-        ]);
+        try {
 
-        return Redirect::back();
+            $location->update([
+                'name'      => $request->name,
+                'slug'      => Str::slug($request->name),
+                'latitude'  => $request->latitude,
+                'longitude' => $request->longitude,
+            ]);
+
+        } catch (QueryException $exception) {
+            return Helper::sendResponse(500, 'error', 'Error', $exception->getMessage());
+        }
+
+        return Helper::sendResponse(200,
+            'success',
+            'Success',
+            'Location Successfully Updated');
     }
 
     /**
@@ -65,7 +86,30 @@ class LocationController extends Controller
      */
     public function destroy(Location $location) :RedirectResponse
     {
-        $location->delete();
-        return Redirect::back();
+        $this->deleteLocationRelatedData($location);
+
+        if (!$location->delete()) {
+            return Helper::sendResponse(500, 'error', 'Error', 'Something Went Wrong');
+        }
+
+        return Helper::sendResponse(200,
+            'success',
+            'Success',
+            'Location Successfully Deleted');
+    }
+
+    /*
+     * Delete all relation data
+     */
+
+    private function deleteLocationRelatedData($location) :void
+    {
+        if ($location->shops) {
+            $location->shops->each(function ($shop) {
+                $shop->coupons()->delete();
+                $shop->products()->delete();
+            });
+            $location->shops()->delete();
+        }
     }
 }

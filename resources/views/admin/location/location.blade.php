@@ -59,6 +59,7 @@
                                         <td>{{ $location->longitude }}</td>
                                         <td>
                                             <form
+                                                id="delete-form{{ $location->id }}"
                                                 action="{{ route('admin.locations.destroy', $location->id) }}"
                                                 method="POST">
                                                 @csrf
@@ -75,8 +76,9 @@
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
                                                 <button
+                                                    data-id="{{ $location->id }}"
                                                     type="submit"
-                                                    class="btn btn-sm btn-outline-danger">
+                                                    class="btn btn-sm btn-outline-danger delete-btn">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                             </form>

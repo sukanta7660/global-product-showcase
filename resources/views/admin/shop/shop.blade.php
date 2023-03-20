@@ -67,6 +67,7 @@
                                     </td>
                                     <td>
                                         <form
+                                            id="delete-form{{ $shop->id }}"
                                             action="{{ route('admin.shops.destroy', $shop->id) }}"
                                             method="POST">
                                             @csrf
@@ -88,8 +89,9 @@
                                                 <i class="bi bi-pencil"></i>
                                             </button>
                                             <button
+                                                data-id="{{ $shop->id }}"
                                                 type="submit"
-                                                class="btn btn-sm btn-outline-danger">
+                                                class="btn btn-sm btn-outline-danger delete-btn">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </form>
