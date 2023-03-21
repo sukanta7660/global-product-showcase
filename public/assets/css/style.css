@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+body{
+    font-family: 'Poppins', sans-serif;
+}
+.food-title {
+	font-weight: 700;
+	border-bottom: 3px solid #ddd;
+	margin-bottom: 45px;
+}
+.marquee:hover p {
+  animation-play-state: paused;
+}
+.marquee{
+  white-space: nowrap;
+}
+.marquee p {
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 20px;
+}
+
+
+

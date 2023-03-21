@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Location;
 use App\Models\Product;
 use App\Models\Shop;
+use Helper;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -30,13 +32,22 @@ class ProductController extends Controller
     {
         $this->validateData($request);
 
-        $product->create(array_merge($request->all(), [
-            'discount_enabled' => isset($request->discount_enabled),
-            'discount_price' => isset($request->discount_enabled) ? $request->discount_price : 0,
-            'status' => isset($request->status),
-        ]));
+        try {
 
-        return Redirect::back();
+            $product->create(array_merge($request->all(), [
+                'discount_enabled' => isset($request->discount_enabled),
+                'discount_price' => isset($request->discount_enabled) ? $request->discount_price : 0,
+                'status' => isset($request->status),
+            ]));
+
+        } catch (QueryException $exception) {
+            return Helper::sendResponse(500, 'error', 'Error', $exception->getMessage());
+        }
+
+        return Helper::sendResponse(200,
+            'success',
+            'Success',
+            'Product Successfully Created');
     }
 
     /**
@@ -46,13 +57,22 @@ class ProductController extends Controller
     {
         $this->validateData($request, $product);
 
-        $product->update(array_merge($request->except(['_token', '_method']), [
-            'discount_enabled' => isset($request->discount_enabled),
-            'discount_price' => isset($request->discount_enabled) ? $request->discount_price : 0,
-            'status' => isset($request->status),
-        ]));
+        try {
 
-        return Redirect::back();
+            $product->update(array_merge($request->except(['_token', '_method']), [
+                'discount_enabled' => isset($request->discount_enabled),
+                'discount_price' => isset($request->discount_enabled) ? $request->discount_price : 0,
+                'status' => isset($request->status),
+            ]));
+
+        } catch (QueryException $exception) {
+            return Helper::sendResponse(500, 'error', 'Error', $exception->getMessage());
+        }
+
+        return Helper::sendResponse(200,
+            'success',
+            'Success',
+            'Product Successfully Updated');
     }
 
     /**
@@ -60,8 +80,19 @@ class ProductController extends Controller
      */
     public function destroy(Product $product) :RedirectResponse
     {
-        $product->delete();
-        return Redirect::back();
+
+        try {
+
+            $product->delete();
+
+        } catch (QueryException $exception) {
+            return Helper::sendResponse(500, 'error', 'Error', $exception->getMessage());
+        }
+
+        return Helper::sendResponse(200,
+            'success',
+            'Success',
+            'Product Successfully Deleted');
     }
 
     private function validateData($request, $product = null) :void

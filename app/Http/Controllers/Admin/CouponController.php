@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\Shop;
+use Helper;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -31,14 +33,23 @@ class CouponController extends Controller
         // validate coupon data
         $this->dataValidate($request);
 
-        // store coupon data
-        $coupon->create(array_merge($request->all(), [
-            'from'      => dateformat($request->from, 'Y-m-d'),
-            'to'        => dateformat($request->to, 'Y-m-d'),
-            'status'    => isset($request->status),
-        ]));
 
-        return Redirect::back();
+        try {
+            // store coupon data
+            $coupon->create(array_merge($request->all(), [
+                'from'      => dateformat($request->from, 'Y-m-d'),
+                'to'        => dateformat($request->to, 'Y-m-d'),
+                'status'    => isset($request->status),
+            ]));
+
+        } catch (QueryException $exception) {
+            return Helper::sendResponse(500, 'error', 'Error', $exception->getMessage());
+        }
+
+        return Helper::sendResponse(200,
+            'success',
+            'Success',
+            'Coupon Successfully Created');
     }
 
     /**
@@ -49,14 +60,23 @@ class CouponController extends Controller
         // validate coupon data
         $this->dataValidate($request, $coupon);
 
-        // store coupon data
-        $coupon->update(array_merge($request->all(), [
-            'from'      => dateformat($request->from, 'Y-m-d'),
-            'to'        => dateformat($request->to, 'Y-m-d'),
-            'status'    => isset($request->status),
-        ]));
+        try {
 
-        return Redirect::back();
+            // store coupon data
+            $coupon->update(array_merge($request->all(), [
+                'from'      => dateformat($request->from, 'Y-m-d'),
+                'to'        => dateformat($request->to, 'Y-m-d'),
+                'status'    => isset($request->status),
+            ]));
+
+        } catch (QueryException $exception) {
+            return Helper::sendResponse(500, 'error', 'Error', $exception->getMessage());
+        }
+
+        return Helper::sendResponse(200,
+            'success',
+            'Success',
+            'Coupon Successfully Updated');
     }
 
     /**
@@ -64,8 +84,18 @@ class CouponController extends Controller
      */
     public function destroy(Coupon $coupon) :RedirectResponse
     {
-        $coupon->delete();
-        return Redirect::back();
+        try {
+
+            $coupon->delete();
+
+        } catch (QueryException $exception) {
+            return Helper::sendResponse(500, 'error', 'Error', $exception->getMessage());
+        }
+
+        return Helper::sendResponse(200,
+            'success',
+            'Success',
+            'Coupon Successfully Deleted');
     }
 
     protected function dataValidate(Request $request, $coupon = null):void

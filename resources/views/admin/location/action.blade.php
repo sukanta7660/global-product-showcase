@@ -1,7 +1,7 @@
 @section('box')
 <!-- Create Update Modal-->
 <div class="modal fade" id="createUpdateModal" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 id="modalTitle" class="modal-title"></h5>

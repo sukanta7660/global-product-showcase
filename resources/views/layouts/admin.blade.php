@@ -16,7 +16,8 @@
     <link href="{{ asset('admin-assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin-assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
     <link href="{{ asset('admin-assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin-assets/css/jquery.dataTables.css') }}">
+{{--    <link href="{{ asset('admin-assets/css/jquery.dataTables.css') }}">--}}
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
     <link href="{{ asset('admin-assets/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('admin-assets/css/custom.css') }}" rel="stylesheet">
     @stack('css')
@@ -52,15 +53,67 @@
 <script src="{{ asset('admin-assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
 <script src="{{ asset('admin-assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('admin-assets/vendor/tinymce/tinymce.min.js') }}"></script>
-<script src="{{ asset('admin-assets/vendor/php-email-form/validate.js') }}"></script>
-<script src="{{ asset('admin-assets/js/jquery.dataTables.js') }}"></script>
+{{--<script src="{{ asset('admin-assets/vendor/php-email-form/validate.js') }}"></script>--}}
+{{--<script src="{{ asset('admin-assets/js/jquery.dataTables.js') }}"></script>--}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
 <script src="{{ asset('admin-assets/js/main.js') }}"></script>
 <script src="{{ asset('admin-assets/js/custom.js') }}"></script>
 <script>
-    $(function () {
-        new DataTable('#dataTable');
-    });
+    $('.delete-btn').click(function (e) {
+        e.preventDefault();
+        let id = $(this).data('id');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are going to delete.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: 'rgba(11,17,57,0.9)',
+            cancelButtonColor: '#9a1313',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("#delete-form"+id).submit();
+            }
+        })
+    })
 </script>
+
+{{-- Alert --}}
+@if(session()->has('status'))
+    <script>
+        let status = '{{ session()->get('status') }}'
+        let alertType = '{{ session()->get('alert_type') }}'
+        let message = '{{ session()->get('message') }}'
+
+        Swal.fire({
+            position: 'top-end',
+            icon: alertType,
+            title: message,
+            showConfirmButton: false,
+            toast: true,
+            timer: 1500,
+        })
+    </script>
+@endif
+{{-- Alert --}}
+
+{{-- Validation Error --}}
+@if($errors->any())
+    <script>
+        let errors = @json($errors->all());
+        $.each(errors, (index, error) => {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: error,
+                showConfirmButton: false,
+                toast: true,
+                timer: 3000,
+            })
+        })
+    </script>
+@endif
+{{-- Validation Error --}}
 @stack('js')
 </body>
 

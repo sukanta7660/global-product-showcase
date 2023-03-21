@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Location;
 use App\Models\Shop;
+use Helper;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -29,13 +31,22 @@ class ShopController extends Controller
     {
         $this->validateData($request);
 
-        $shop->create($request->all());
+        try {
 
-        if (!isset($request->status)) {
-            $shop->update(['status' => false]);
+            $shop->create($request->all());
+
+            if (!isset($request->status)) {
+                $shop->update(['status' => false]);
+            }
+
+        } catch (QueryException $exception) {
+            return Helper::sendResponse(500, 'error', 'Error', $exception->getMessage());
         }
 
-        return Redirect::back();
+        return Helper::sendResponse(200,
+            'success',
+            'Success',
+            'Shop Successfully Created');
     }
 
     /**
@@ -45,13 +56,22 @@ class ShopController extends Controller
     {
         $this->validateData($request, $shop);
 
-        $shop->update($request->except(['_token', '_method']));
+        try {
 
-        if (!isset($request->status)) {
-            $shop->update(['status' => false]);
+            $shop->update($request->except(['_token', '_method']));
+
+            if (!isset($request->status)) {
+                $shop->update(['status' => false]);
+            }
+
+        } catch (QueryException $exception) {
+            return Helper::sendResponse(500, 'error', 'Error', $exception->getMessage());
         }
 
-        return Redirect::back();
+        return Helper::sendResponse(200,
+            'success',
+            'Success',
+            'Shop Successfully Updated');
     }
 
     /**
@@ -59,8 +79,19 @@ class ShopController extends Controller
      */
     public function destroy(Shop $shop) :RedirectResponse
     {
-        $shop->delete();
-        return Redirect::back();
+        try {
+
+            $this->deletedRelatedData($shop);
+
+            $shop->delete();
+
+        } catch (QueryException $exception) {
+            return Helper::sendResponse(500, 'error', 'Error', $exception->getMessage());
+        }
+        return Helper::sendResponse(200,
+            'success',
+            'Success',
+            'Shop Successfully Deleted');
     }
 
     private function validateData($request, $shop = null) :void
@@ -82,5 +113,11 @@ class ShopController extends Controller
             'sort' => 'integer',
             'status' => 'boolean'
         ]);
+    }
+
+    private function deletedRelatedData ($shop) :void
+    {
+        $shop->products()->delete();
+        $shop->coupons()->delete();
     }
 }

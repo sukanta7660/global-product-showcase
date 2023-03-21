@@ -45,7 +45,7 @@
                             <tr>
                                 <th>#</th>
                                 <th scope="col">Code</th>
-                                <th class="wp-20" scope="col">Shop</th>
+                                {{--<th class="wp-20" scope="col">Shop</th>--}}
                                 <th scope="col">Coupon Price</th>
                                 <th scope="col">From</th>
                                 <th scope="col">To</th>
@@ -58,7 +58,7 @@
                                 <tr>
                                     <th scope="col">{{ dateformat($coupon->created_at, 'd M, Y') }}</th>
                                     <td class="wp-20 text-uppercase">{{ $coupon->coupon_code }}</td>
-                                    <td class="wp-20 text-capitalize">{{ $coupon->shop->name }}</td>
+                                    {{--<td class="wp-20 text-capitalize">{{ $coupon->shop->name }}</td>--}}
                                     <td>{{ getCurrencyFormat($coupon->coupon_price) }}</td>
                                     <td>{{ dateformat($coupon->from, 'd M, Y') }}</td>
                                     <td>{{ dateformat($coupon->to, 'd M, Y') }}</td>
@@ -69,7 +69,9 @@
                                     </td>
                                     <td>
                                         <form
-                                            action="{{ route('admin.shops.destroy', $coupon->id) }}"
+                                            id="delete-form{{ $coupon->id }}"
+                                            action="{{ route('admin.coupons.destroy', $coupon->id) }}"
+                                            class="delete-form"
                                             method="POST">
                                             @csrf
                                             @method('DELETE')
@@ -88,8 +90,9 @@
                                                 <i class="bi bi-pencil"></i>
                                             </button>
                                             <button
+                                                data-id="{{ $coupon->id }}"
                                                 type="submit"
-                                                class="btn btn-sm btn-outline-danger">
+                                                class="btn btn-sm btn-outline-danger delete-btn">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </form>
@@ -144,7 +147,7 @@
 
                 $('#createUpdateModal #modalTitle').html(formTitle);
                 $('#createUpdateModal #btnSubmit').html(formBtnText);
-                $('#createUpdateForm [name=coupon_code]').val(code);
+                $('#createUpdateForm [name=coupon_code]').val(code.toUpperCase());
                 $('#createUpdateForm [name=coupon_price]').val(price);
                 $('#createUpdateForm [name=from]').val(from);
                 $('#createUpdateForm [name=to]').val(to);
