@@ -1,5 +1,5 @@
 @extends('layouts.user')
-@section('title', 'Home')
+@section('title', 'Special Discount Product')
 @section('content')
     <h4 class="page-title">Discount Products</h4>
     <table class="table table-bordered table-responsive mt-3">
