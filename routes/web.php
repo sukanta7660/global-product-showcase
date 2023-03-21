@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect('login');
-});
-
 Route::get('/clear', function(){
     \Artisan::call('optimize');
     \Artisan::call('route:clear');

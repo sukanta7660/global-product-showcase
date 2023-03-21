@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Coupon;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -53,4 +54,9 @@ function dateTimeFormatHuman($dateTime) :string
 {
     $dt = Carbon::parse($dateTime);
     return $dt->diffForHumans();
+}
+
+function getCoupons():\Illuminate\Database\Eloquent\Collection
+{
+    return Coupon::whereStatus(true)->with('shop')->get();
 }
