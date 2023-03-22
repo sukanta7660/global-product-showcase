@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@hasSection('title') @yield('title') || @endif{{ config('site.siteTitle') }}</title>
     <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
 </head>
 <body>
@@ -40,7 +41,47 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('admin-assets/js/jquery/jquery-3.6.3.min.js') }}"></script>
 <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
 <script src="{{ asset('/assets/js/main.js') }}"></script>
+<script>
+    $('.confirmBtn').click(function (e) {
+        e.preventDefault();
+        let id = $(this).data('id');
+        let confirmText = $(this).data('text');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: confirmText,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: 'rgba(11,17,57,0.9)',
+            cancelButtonColor: '#9a1313',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("#confirmForm"+id).submit();
+            }
+        })
+    })
+</script>
+{{-- Alert --}}
+@if(session()->has('status'))
+    <script>
+        let status = '{{ session()->get('status') }}'
+        let alertType = '{{ session()->get('alert_type') }}'
+        let message = '{{ session()->get('message') }}'
+
+        Swal.fire({
+            position: 'top-end',
+            icon: alertType,
+            title: message,
+            showConfirmButton: false,
+            toast: true,
+            timer: 1500,
+        })
+    </script>
+@endif
+{{-- Alert --}}
 </body>
 </html>
