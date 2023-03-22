@@ -19,7 +19,11 @@
 <div class="container mt-5 border pb-5 mb-5">
     <div class="row">
         <div class="col-md-12 mx-auto text-center">
-            <h1 class="food-title p-4">{{ config('site.siteTitle') }}</h1>
+            <h1
+                class="food-title p-4 cursor-pointer"
+                onclick="location.href='{{ route('user.index') }}'">
+                {{ config('site.siteTitle') }}
+            </h1>
         </div>
     </div>
     <div class="row">

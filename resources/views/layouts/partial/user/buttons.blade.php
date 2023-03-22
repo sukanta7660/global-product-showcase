@@ -10,7 +10,15 @@
             <a href="{{ route('user.my-favourite.product') }}" class="btn btn-success d-block">Favourites</a>
         </div>
         <div class="col-md-3">
-            <a href="{{ route('login') }}" class="btn btn-dark d-block">Logout</a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+
+                <a class="btn btn-dark d-block" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                    {{ __('Log Out') }}
+                </a>
+            </form>
         </div>
     @endauth
     @guest
