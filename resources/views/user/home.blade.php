@@ -6,7 +6,7 @@
             <input type="email" class="form-control" id="floatingInput" placeholder="eggs...">
             <label for="floatingInput">Please type product name</label>
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="button" onclick="addMarker({ lat: 51.5, lng: -0.09, title: 'Sukanta' })" class="btn btn-primary">Search</button>
     </form>
     <table class="table table-bordered table-responsive mt-3">
         <tr>

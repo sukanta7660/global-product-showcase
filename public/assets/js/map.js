@@ -8,7 +8,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // let markers = [
-//     {lat: 51.5, lng: -0.09, title: "Marker 1"},
+//     {lat: 51.5, lng: -0.09, title: "Sukanta"},
 //     {lat: 51.51, lng: -0.1, title: "Marker 2"},
 //     {lat: 51.49, lng: -0.08, title: "Marker 3"}
 // ];
@@ -16,8 +16,16 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // for (let i = 0; i < markers.length; i++) {
 //     let marker = L.marker([markers[i].lat, markers[i].lng], {
 //         title: markers[i].title,
-//         color: 'red'
+//         color: '#ccccccc'
 //     }).addTo(map);
 // }
+
+function addMarker({ lat, lng, title }) {
+    let marker = L.marker([lat, lng], {
+        title: title
+    }).addTo(map);
+
+    map.flyTo([lat, lng], 15);
+}
 
 let geocoder = L.Control.Geocoder.nominatim();
