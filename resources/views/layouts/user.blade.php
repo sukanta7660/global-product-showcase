@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
+    @stack('css')
 </head>
 <body>
 
@@ -87,5 +88,6 @@
     </script>
 @endif
 {{-- Alert --}}
+@stack('js')
 </body>
 </html>

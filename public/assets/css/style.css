@@ -21,5 +21,9 @@ body{
     cursor: pointer;
 }
 
+#map {
+    height: 300px;
+}
+
 
 
