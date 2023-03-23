@@ -13,7 +13,7 @@ class SpecialDiscountController extends Controller
     {
         $discountProducts = Product::where('discount_enabled', true)
             ->whereStatus(true)
-            ->get()
+            ->paginate(10)
         ;
         return view('user.specialDiscount', compact('discountProducts'));
     }

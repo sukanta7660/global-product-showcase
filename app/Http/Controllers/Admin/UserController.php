@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Helper;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -37,7 +38,11 @@ class UserController extends Controller
 
     public function destroy(User $user) :RedirectResponse
     {
+        $user->favourites()->delete();
         $user->delete();
-        return Redirect::back();
+        return Helper::sendResponse(200,
+            'success',
+            'Success',
+            'User Successfully Deleted');
     }
 }

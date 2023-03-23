@@ -1,5 +1,5 @@
 @extends('layouts.user')
-@section('title', 'Home')
+@section('title', 'Special Discount Product')
 @section('content')
     <h4 class="page-title">Discount Products</h4>
     <table class="table table-bordered table-responsive mt-3">
@@ -21,10 +21,23 @@
                 <td>
                     <div class="btn-group">
                         <a href="" class="btn btn-primary">Add Lists</a>
-                        <a href="" class="btn btn-success">Add Favourites</a>
+                        <button
+                            type="button"
+                            data-text="You are going to add to the favourite list"
+                            data-id="{{ $product->id }}"
+                            class="btn btn-success confirmBtn"
+                        >
+                            Add Favourites
+                        </button>
+                        <form method="POST" action="{{ route('user.add-to.my-favourite', $product->id) }}"
+                              id="confirmForm{{ $product->id }}">
+                            @csrf
+                            @method('PATCH')
+                        </form>
                     </div>
                 </td>
             </tr>
         @endforeach
     </table>
+    {{ $discountProducts->links() }}
 @endsection

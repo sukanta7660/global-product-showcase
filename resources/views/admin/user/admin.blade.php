@@ -28,14 +28,16 @@
                                     <td>
                                        @if(auth()->user()->id !== $user->id)
                                             <form
+                                                id="delete-form{{ $user->id }}"
                                                 class="float-end"
                                                 action="{{ route('admin.user.destroy', $user->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button
+                                                    data-id="{{ $user->id }}"
                                                     type="submit"
-                                                    class="btn btn-sm btn-outline-danger">
+                                                    class="btn btn-sm btn-outline-danger delete-btn">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                             </form>
