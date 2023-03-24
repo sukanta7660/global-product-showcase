@@ -76,8 +76,38 @@ function addMarker({ lat, lng, title }) {
     }).addTo(map);
 
     map.flyTo([lat, lng], 15);
+
+    let locMap = document.getElementById('map');
+
+    locMap.scrollIntoView({ behavior: 'smooth' });
+
 }
 /*-------------- Add Marker To The Map ------------------*/
 
 let geocoder = L.Control.Geocoder.nominatim();
+
+/*-------------- Make Searchable ------------------*/
+let currentLocationInfo = JSON.parse(localStorage.getItem('currentLocation'));
+
+$('#productSearchBtn').on('click', function() {
+
+    let productName = $('#productName').val();
+    $.ajax({
+        type: 'POST',
+        url: $(this).data('action'),
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+        },
+        data: {
+            latitude: currentLocationInfo.latitude,
+            longitude: currentLocationInfo.longitude,
+            search: productName
+        },
+        success: function(response) {
+            var shops = response.shops;
+            // Do something with the shops
+        }
+    });
+});
+/*-------------- Make Searchable ------------------*/
 

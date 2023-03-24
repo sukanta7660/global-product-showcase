@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
     @stack('css')
 </head>
-<body>
+<body id="app">
 
 
 {{--Place Modal--}}
@@ -68,8 +68,14 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script>
+    let csrfToken = '{{ csrf_token() }}';
+</script>
 <script src="{{ asset('assets/js/map.js') }}"></script>
 <script src="{{ asset('/assets/js/main.js') }}"></script>
+{{--@if(request()->path() === '/')--}}
+{{--    <script src="{{ mix('/js/app.js') }}"></script>--}}
+{{--@endif--}}
 <script>
     $('.confirmBtn').click(function (e) {
         e.preventDefault();

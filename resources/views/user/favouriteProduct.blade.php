@@ -19,18 +19,26 @@
                 <td>{{ $favourite->product->shop->location->name }}</td>
                 <td>{{ $favourite->product->quantity }}</td>
                 <td>
-                    <form method="POST" action="{{ route('user.remove-from.my-favourite', $favourite->id) }}"
-                          id="confirmForm{{ $favourite->id }}">
-                        @csrf
-                        @method('DELETE')
-                        <a
-                            href=""
-                            data-id="{{ $favourite->id }}"
-                           data-text="You are going to delete from favourites!"
-                            class="btn btn-danger confirmBtn">
-                            Remove
-                        </a>
-                    </form>
+                    <div class="btn-group">
+                        <form method="POST" action="{{ route('user.remove-from.my-favourite', $favourite->id) }}"
+                              id="confirmForm{{ $favourite->id }}">
+                            <button
+                                type="button"
+                                onclick="addMarker({ lat: '{{ $favourite->product->shop->latitude }}', lng: '{{ $favourite->product->shop->longitude }}', title: '{{ $favourite->product->shop->name }}' })"
+                                class="btn btn-sm mb-1 btn-block btn-primary">
+                                View in Map
+                            </button>
+                            @csrf
+                            @method('DELETE')
+                            <a
+                                href=""
+                                data-id="{{ $favourite->id }}"
+                                data-text="You are going to delete from favourites!"
+                                class="btn btn-sm btn-block btn-danger confirmBtn">
+                                Remove
+                            </a>
+                        </form>
+                    </div>
                 </td>
             </tr>
         @empty
@@ -40,4 +48,8 @@
         @endforelse
     </table>
     {{ $favourites->links() }}
+
+    <div class="mt-3">
+        <div id="map"></div>
+    </div>
 @endsection
