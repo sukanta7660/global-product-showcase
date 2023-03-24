@@ -11,35 +11,42 @@ if (!currentLocation) {
 }
 
 // set location
-let locationName = $('#locationName').val();
-let latitude = $('#latitude').val();
-let longitude = $('#longitude').val();
+if (currentLocation) {
+    let location = JSON.parse(currentLocation);
 
-function setLocation() {
+    $('#currentLocation').html(location.name)
+}
 
- let location = {
-     name: locationName,
-     latitude: latitude,
-     longitude: longitude
- }
+function setLocation({ locationName, latitude, longitude }) {
 
- if (currentLocation) {
+     let location = {
+         name: locationName,
+         latitude: latitude,
+         longitude: longitude
+     }
 
-     localStorage.removeItem(LOCATION_KEY);
-     localStorage.setItem(LOCATION_KEY, JSON.stringify(location));
+     if (currentLocation) {
 
- } else {
-     localStorage.setItem(LOCATION_KEY, JSON.stringify(location));
- }
+         localStorage.removeItem(LOCATION_KEY);
+         localStorage.setItem(LOCATION_KEY, JSON.stringify(location));
+
+     } else {
+         localStorage.setItem(LOCATION_KEY, JSON.stringify(location));
+     }
 
 }
 
 $('#locationForm').on('submit', function () {
+
+    let locationName = $('#locationName').val();
+    let latitude = $('#latitude').val();
+    let longitude = $('#longitude').val();
+
     if (!locationName || !latitude || !longitude) {
         Swal.fire({
             position: 'top-end',
             icon: 'error',
-            title: 'Invalid Location. Latitude and longitude not found for this location',
+            title: 'Invalid Location',
             showConfirmButton: false,
             toast: true,
             timer: 3000,
@@ -48,7 +55,11 @@ $('#locationForm').on('submit', function () {
         return false;
     }
 
-    setLocation();
+    setLocation({locationName, latitude, longitude});
+});
+
+$('#addLocationBtn').on('click', function () {
+    $('#locationModalCloseBtn').show();
 });
 
 

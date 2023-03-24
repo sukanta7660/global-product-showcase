@@ -5,7 +5,7 @@ $('#createUpdateModal').on('shown.bs.modal', function () {
     let latInput = document.querySelector('#latitude');
     let longInput = document.querySelector('#longitude');
 // let fullName = document.querySelector('#full-name');
-    let map = L.map('map').setView([51.505, -0.09], 13);
+    let map = L.map('map').setView([29.973350, -95.646450], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
             '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +

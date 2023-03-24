@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@hasSection('title') @yield('title') || @endif{{ config('site.siteTitle') }}</title>
     <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
     @stack('css')
@@ -28,6 +30,21 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-12">
+            <p class="float-end">
+                <span class="bg-dark text-white p-1" style="border-radius: 5px; margin-right: 5px">
+                    <b>Current Location:</b>
+                    <span class="text-capitalize" id="currentLocation"></span>
+                </span>
+                <button
+                    data-bs-toggle="modal"
+                    data-bs-target="#locationModal"
+                    id="addLocationBtn"
+                    class="btn btn-sm btn-primary">
+                    Add New Address
+                </button>
+            </p>
+        </div>
         <div class="col-md-10">
 
             @yield('content')
@@ -49,6 +66,9 @@
 <script src="{{ asset('admin-assets/js/jquery/jquery-3.6.3.min.js') }}"></script>
 <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script src="{{ asset('assets/js/map.js') }}"></script>
 <script src="{{ asset('/assets/js/main.js') }}"></script>
 <script>
     $('.confirmBtn').click(function (e) {

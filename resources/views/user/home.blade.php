@@ -87,12 +87,12 @@
         <div id="map"></div>
     </div>
 @endsection
-@push('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-@endpush
-@push('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <script src="{{ asset('assets/js/map.js') }}"></script>
-@endpush
+{{--@push('css')--}}
+{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />--}}
+{{--    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />--}}
+{{--@endpush--}}
+{{--@push('js')--}}
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>--}}
+{{--    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>--}}
+{{--    <script src="{{ asset('assets/js/map.js') }}"></script>--}}
+{{--@endpush--}}
