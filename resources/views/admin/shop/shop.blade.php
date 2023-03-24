@@ -57,7 +57,7 @@
                                 <tr>
                                     <th scope="col">{{ dateformat($shop->created_at, 'd M, Y') }}</th>
                                     <td class="wp-20">{{ $shop->name }}</td>
-                                    <td class="wp-20">{{ $shop->location->name }}</td>
+                                    <td class="wp-20">{{ $shop->location_name }}</td>
                                     <td>{{ $shop->cell }}</td>
                                     <td>{{ $shop->sort }}</td>
                                     <td>

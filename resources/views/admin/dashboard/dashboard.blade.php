@@ -71,4 +71,5 @@
             </div><!-- End Left side columns -->
 
         </div>
-    </section>@endsection
+    </section>
+@endsection
