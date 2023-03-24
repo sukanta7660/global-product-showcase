@@ -9,6 +9,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Shop extends BaseModel
 {
 
+    protected $appends = [
+        'latitude', 'longitude', 'location_name'
+    ];
+
+    /*-------------------------------------
+    ----------------Scopes----------------*/
+    public function getLatitudeAttribute() :string
+    {
+        return $this->location->latitude;
+    }
+
+    public function getLongitudeAttribute() :string
+    {
+        return $this->location->longitude;
+    }
+
+    public function getLocationNameAttribute() :string
+    {
+        return $this->location->name;
+    }
+
     /*--------------------------------------
     ----------------Relations--------------*/
 

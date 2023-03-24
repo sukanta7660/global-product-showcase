@@ -6,6 +6,7 @@ use App\Http\Controllers\User\SpecialDiscountController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::post('/search-product', [IndexController::class, 'findShops'])->name('findShops');
 
 Route::get('/special-discount/products', [SpecialDiscountController::class, 'index'])
     ->name('special-discount.product');

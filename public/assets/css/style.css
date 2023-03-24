@@ -25,5 +25,39 @@ body{
     height: 300px;
 }
 
+#search-results {
+    margin-top: 1px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    list-style-type: none;
+    padding: 0;
+    position: absolute;
+    width: 94%;
+    background: #fff;
+    z-index: 99999;
+    max-height: 198px;
+    overflow-y: auto;
+}
+
+#search-results li {
+    padding: 5px;
+    cursor: pointer;
+    background: #f5f5f5;
+    margin-bottom: 5px;
+}
+
+#search-results li span:first-child{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#search-results li span:nth-last-child(1){
+    font-size: 13px;
+}
+
+#search-results li:hover {
+    background-color: #b4b4b4;
+}
+
 
 

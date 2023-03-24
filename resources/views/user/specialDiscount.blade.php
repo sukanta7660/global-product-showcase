@@ -20,7 +20,12 @@
                 <td>{{ $product->quantity }}</td>
                 <td>
                     <div class="btn-group">
-                        <a href="" class="btn btn-primary">Add Lists</a>
+                        <button
+                            type="button"
+                            onclick="addMarker({ lat: '{{ $product->shop->latitude }}', lng: '{{ $product->shop->longitude }}', title: '{{ $product->shop->name }}' })"
+                           class="btn btn-primary">
+                            View in Map
+                        </button>
                         <button
                             type="button"
                             data-text="You are going to add to the favourite list"
@@ -40,4 +45,8 @@
         @endforeach
     </table>
     {{ $discountProducts->links() }}
+
+    <div class="mt-3">
+        <div id="map"></div>
+    </div>
 @endsection
