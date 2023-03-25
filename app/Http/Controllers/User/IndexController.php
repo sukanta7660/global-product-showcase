@@ -21,8 +21,8 @@ class IndexController extends Controller
     public function findShops(Request $request) :JsonResponse
     {
 //        dd($request->all());
-        $latitude = (int)$request->latitude;
-        $longitude = (int)$request->longitude;
+        $latitude = $request->latitude;
+        $longitude = $request->longitude;
 
         $distance = 10;
     }
