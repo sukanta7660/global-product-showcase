@@ -25,5 +25,7 @@ class IndexController extends Controller
         $longitude = $request->longitude;
 
         $distance = 10;
+
+        return response()->json($distance);
     }
 }
