@@ -12,6 +12,7 @@ class SpecialDiscountController extends Controller
     public function index() :View
     {
         $discountProducts = Product::where('discount_enabled', true)
+            ->with('shop')
             ->whereStatus(true)
             ->paginate(10)
         ;

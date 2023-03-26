@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Location;
+use App\Models\Product;
 use App\Models\Shop;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,17 +20,25 @@ class IndexController extends Controller
 
     public function findShops(Request $request) :JsonResponse
     {
-        dd($request->all());
-        $latitude = $request->input('latitude');
-        $longitude = $request->input('longitude');
+        $latitude = $request->latitude;
+        $longitude = $request->longitude;
 
-        $distance = 10; // Distance in kilometers
+        $distance = 10000;
 
-        $shops = Shop::select(DB::raw('*, ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance'))
-            ->having('distance', '<', $distance)
-            ->orderBy('distance')
+        $shops = Shop::selectRaw("*, ( 6371 * acos( cos( radians(?) ) *
+            cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) *
+            sin( radians( latitude ) ) ) ) AS distance")
+            ->having("distance", '<=', $distance)
+            ->orderBy("distance", "asc")
+            ->setBindings([$latitude, $longitude, $latitude])
             ->get();
 
-        return response()->json(['shops' => $shops]);
+        $products = Product::join('shops', 'shops.id', '=', 'products.shop_id')
+            ->where('products.name', 'LIKE', '%'. $request->search .'%')
+            ->whereIn('shops.id', $shops->pluck('id')->toArray())
+            ->with('shop')
+            ->get();
+
+        return response()->json($products);
     }
 }

@@ -20,6 +20,7 @@ class ShopFactory extends Factory
     {
         $shopName = $this->faker->unique()->words(2, true);
         $location = $this->faker->randomElement(Location::all());
+        $locationName = $this->faker->address;
         return [
             'name'          => $shopName,
             'slug'          => Str::slug($shopName),
@@ -28,7 +29,10 @@ class ShopFactory extends Factory
             'cell'          => $this->faker->unique()->e164PhoneNumber,
             'email'         => $this->faker->email,
             'status'        => $this->faker->boolean,
-            'location_id'   => $location->id
+            'location_id'   => $location->id,
+            'location_name' => $locationName,
+            'latitude'      => $this->faker->latitude,
+            'longitude'     => $this->faker->longitude,
         ];
     }
 }

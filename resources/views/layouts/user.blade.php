@@ -71,6 +71,8 @@
 <script>
     let csrfToken = '{{ csrf_token() }}';
 </script>
+<script src="{{ asset('assets/js/collect.js') }}"></script>
+<script src="{{ asset('assets/js/lodash.js') }}"></script>
 <script src="{{ asset('assets/js/map.js') }}"></script>
 <script src="{{ asset('/assets/js/main.js') }}"></script>
 {{--@if(request()->path() === '/')--}}

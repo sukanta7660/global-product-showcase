@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class ShopController extends Controller
@@ -33,7 +34,17 @@ class ShopController extends Controller
 
         try {
 
-            $shop->create($request->all());
+            $location = Location::whereSlug(Str::slug($request->location_name))->updateOrCreate([
+                'name'      => $request->location_name,
+                'slug'      => Str::slug($request->location_name),
+                'latitude'  => $request->latitude,
+                'longitude' => $request->longitude,
+                'status'    => true
+            ]);
+
+            $shop->create(array_merge($request->all(), [
+                'location_id' => $location->id
+            ]));
 
             if (!isset($request->status)) {
                 $shop->update(['status' => false]);
@@ -57,6 +68,16 @@ class ShopController extends Controller
         $this->validateData($request, $shop);
 
         try {
+
+//            dd($shop->location);
+
+            $location = Location::where('id', $shop->location_id)->update([
+                'name'      => $request->location_name,
+                'slug'      => Str::slug($request->location_name),
+                'latitude'  => $request->latitude,
+                'longitude' => $request->longitude,
+                'status'    => true
+            ]);
 
             $shop->update($request->except(['_token', '_method']));
 
@@ -104,13 +125,13 @@ class ShopController extends Controller
             : 'unique:shops,slug';
 
         $request->validate([
-            'location_id' => 'required|exists:locations,id',
+            'location_name' => 'required',
             'name' => "required|string|min:3|max:35|{$uniqueName}",
             'slug' => "required|string|min:3|max:50|{$uniqueSlug}",
             'about' => 'nullable|string',
             'cell' => 'required|string',
             'email' => 'required|email',
-            'sort' => 'integer',
+            'sort' => 'nullable|integer',
             'status' => 'boolean'
         ]);
     }

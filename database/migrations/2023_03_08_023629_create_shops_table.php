@@ -19,7 +19,12 @@ return new class extends Migration
             $table->text('about')->nullable();
             $table->string('cell')->nullable();
             $table->string('email')->nullable();
-            $table->foreignId('location_id')->constrained('locations');
+            $table->foreignId('location_id')
+                ->nullable()
+                ->constrained('locations');
+            $table->text('location_name');
+            $table->float('latitude', 8,2);
+            $table->float('longitude', 8,2);
             $table->integer('sort')->default(0);
             $table->boolean('status')->default(true);
             $table->softDeletes();
