@@ -85,25 +85,49 @@
                                     placeholder="Cell No"
                                     id="cell">
                             </div>
-                            <div class="col-4">
+                            <div class="col-12 mb-3">
                                 <label
-                                    for="location_id"
+                                    for="location"
                                     class="form-label">
                                     Location
                                 </label>
-                                <select
+                                <input
+                                    type="text"
+                                    name="location_name"
                                     class="form-control"
-                                    name="location_id"
-                                    id="location_id">
-                                    <option value="">Select a Location</option>
-                                    @foreach($locations as $location)
-                                        <option value="{{ $location->id }}">
-                                            {{ $location->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                    required
+                                    id="location">
+                                <ul id="search-results"></ul>
                             </div>
-                            <div class="col-4">
+                            <div class="col-6">
+                                <label
+                                    for="latitude"
+                                    class="form-label">
+                                    Latitude
+                                </label>
+                                <input
+                                    readonly
+                                    type="text"
+                                    name="latitude"
+                                    placeholder="Latitude"
+                                    class="form-control"
+                                    id="latitude">
+                            </div>
+                            <div class="col-6">
+                                <label
+                                    for="longitude"
+                                    class="form-label">
+                                    Longitude
+                                </label>
+                                <input
+                                    type="text"
+                                    readonly
+                                    name="longitude"
+                                    class="form-control"
+                                    placeholder="Longitude"
+                                    id="longitude">
+                            </div>
+                            <div class="col-6">
                                 <label
                                     for="sort"
                                     class="form-label">
@@ -117,7 +141,7 @@
                                     min="0"
                                     id="sort">
                             </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <label
                                     for="status"
                                     class="form-label">
@@ -127,6 +151,9 @@
                                     <input type="checkbox" name="status" value="1" checked>
                                     <span class="slider round"></span>
                                 </label>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <div id="map"></div>
                             </div>
                         </div>
                     </div>

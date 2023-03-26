@@ -79,7 +79,9 @@
                                                 data-description="{{ $shop->about }}"
                                                 data-cell="{{ $shop->cell }}"
                                                 data-email="{{ $shop->email }}"
-                                                data-location="{{ $shop->location_id }}"
+                                                data-locationname="{{ $shop->location_name }}"
+                                                data-latitude="{{ $shop->latitude }}"
+                                                data-longitude="{{ $shop->longitude }}"
                                                 data-sort="{{ $shop->sort }}"
                                                 data-status="{{ $shop->status }}"
                                                 type="button"
@@ -109,9 +111,12 @@
     </section>
 @endsection
 @push('css')
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 @endpush
 @push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script>
         $(() => {
             $('#addLocationButton').click(function (e) {
@@ -134,7 +139,9 @@
                 let slug = $(this).data('slug');
                 let cell = $(this).data('cell');
                 let email = $(this).data('email');
-                let location = $(this).data('location');
+                let locationName = $(this).data('locationname');
+                let latitude = $(this).data('latitude');
+                let longitude = $(this).data('longitude');
                 let sort = $(this).data('sort');
                 let status = $(this).data('status');
                 let description = $(this).data('description');
@@ -151,6 +158,9 @@
                 $('#createUpdateForm [name=name]').val(name);
                 $('#createUpdateForm [name=slug]').val(slug);
                 $('#createUpdateForm [name=cell]').val(cell);
+                $('#createUpdateForm [name=location_name]').val(locationName);
+                $('#createUpdateForm [name=latitude]').val(latitude);
+                $('#createUpdateForm [name=longitude]').val(longitude);
                 $('#createUpdateForm [name=email]').val(email);
                 $('#createUpdateForm [name=location_id]').val(location);
                 $('#createUpdateForm [name=sort]').val(sort);
@@ -164,6 +174,7 @@
         });
         function resetForm() {
             document.getElementById("createUpdateForm").reset();
+            $('#sort').val(0);
         }
 
         function addSlug () {
@@ -173,4 +184,5 @@
         }
 
     </script>
+    <script src="{{ asset('admin-assets/plugins/js/activeLeaflet.js') }}"></script>
 @endpush
