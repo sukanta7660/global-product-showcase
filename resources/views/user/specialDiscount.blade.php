@@ -22,7 +22,7 @@
                     <div class="btn-group">
                         <button
                             type="button"
-                            onclick="addMarker({ lat: '{{ $product->shop->latitude }}', lng: '{{ $product->shop->longitude }}', title: '{{ $product->shop->name }}' })"
+                            onclick="addMarker({ lat: '{{ $product->shop->latitude }}', lng: '{{ $product->shop->longitude }}', title: '{{ $product->shop->name }}', product: '{{ $product }}' })"
                            class="btn btn-primary">
                             View in Map
                         </button>

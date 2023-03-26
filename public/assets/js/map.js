@@ -70,10 +70,12 @@ searchInput.addEventListener('keyup', function() {
 /*-------------- Location Search ------------------*/
 
 /*-------------- Add Marker To The Map ------------------*/
-function addMarker({ lat, lng, title }) {
+function addMarker({ lat, lng, title, product }) {
     let marker = L.marker([lat, lng], {
         title: title
     }).addTo(map);
+
+    addToRecentViewList(product);
 
     map.flyTo([lat, lng], 15);
 
