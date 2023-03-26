@@ -75,6 +75,8 @@ function addMarker({ lat, lng, title, product = null }) {
         title: title
     }).addTo(map);
 
+    console.log(product)
+
     if (product) {
         addToRecentViewList(product);
     }
@@ -108,8 +110,36 @@ $('#productSearchBtn').on('click', function() {
             search: productName
         },
         success: function(response) {
-            var shops = response.shops;
-            // Do something with the shops
+            let productHtml = '';
+
+            if (response.length) {
+                $.each(response, function (index, product) {
+                    productHtml += `<tr>
+                <td>${product.shop.name}</td>
+                <td>${product.name}</td>
+                <td>$ ${product.price}</td>
+                <td>${product.shop.location_name}</td>
+                <td>${product.quantity}</td>
+                <td>
+                    <div class="btn-group">
+                        <button
+                        type="button"
+                        onClick="addMarker({ lat: '${product.shop.latitude}', lng: '${product.shop.longitude}', title: '${product.shop.name}'})"
+                        class="btn btn-primary">View In Map</button>
+                        <!--<a href="" class="btn btn-success">Add Favourites</a>-->
+                    </div>
+                </td>
+            </tr>`;
+                });
+            } else {
+                productHtml += `
+                <tr>
+                    <td colspan="6">No Product Found</td>
+                </tr>
+                `;
+            }
+
+            $('#productSearchResults').html(productHtml);
         }
     });
 });

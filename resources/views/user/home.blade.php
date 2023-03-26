@@ -27,19 +27,7 @@
             </tr>
         </thead>
         <tbody id="productSearchResults">
-            <tr>
-                <td>Baba G Wholesalers</td>
-                <td>Eggs</td>
-                <td>$20</td>
-                <td>Norfolky, Virginia</td>
-                <td>1 Dozens</td>
-                <td>
-                    <div class="btn-group">
-                        <a href="" class="btn btn-primary">Add Lists</a>
-                        <a href="" class="btn btn-success">Add Favourites</a>
-                    </div>
-                </td>
-            </tr>
+
         </tbody>
     </table>
     <!-- Home Page Content -->

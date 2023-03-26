@@ -20,12 +20,25 @@ class IndexController extends Controller
 
     public function findShops(Request $request) :JsonResponse
     {
-//        dd($request->all());
         $latitude = $request->latitude;
         $longitude = $request->longitude;
 
-        $distance = 10;
+        $distance = 10000;
 
-        return response()->json($distance);
+        $shops = Shop::selectRaw("*, ( 6371 * acos( cos( radians(?) ) *
+            cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) *
+            sin( radians( latitude ) ) ) ) AS distance")
+            ->having("distance", '<=', $distance)
+            ->orderBy("distance", "asc")
+            ->setBindings([$latitude, $longitude, $latitude])
+            ->get();
+
+        $products = Product::join('shops', 'shops.id', '=', 'products.shop_id')
+            ->where('products.name', 'LIKE', '%'. $request->search .'%')
+            ->whereIn('shops.id', $shops->pluck('id')->toArray())
+            ->with('shop')
+            ->get();
+
+        return response()->json($products);
     }
 }
