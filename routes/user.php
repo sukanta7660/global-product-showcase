@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\User\FavouritesController;
 use App\Http\Controllers\User\IndexController;
+use App\Http\Controllers\User\RecentViewController;
 use App\Http\Controllers\User\SpecialDiscountController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,6 @@ Route::patch('/add-to-favourite/{product}', [FavouritesController::class, 'addTo
 
 Route::delete('/remove-from-favourites/{favouriteProduct}', [FavouritesController::class, 'removeFromFavourite'])
     ->name('remove-from.my-favourite');
+
+Route::get('/recent-view/products', [RecentViewController::class, 'index'])
+    ->name('recent-view.product');

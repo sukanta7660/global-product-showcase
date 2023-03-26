@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-3">
-        <a href="#" class="btn btn-primary d-block">Lists</a>
+        <a href="{{ route('user.recent-view.product') }}" class="btn btn-primary d-block">Recent Views</a>
     </div>
     <div class="col-md-3">
         <a href="{{ route('user.special-discount.product') }}" class="btn btn-danger d-block">Special Discounts</a>
