@@ -35,12 +35,22 @@
         <div id="map"></div>
     </div>
 @endsection
-{{--@push('css')--}}
-{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />--}}
-{{--    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />--}}
-{{--@endpush--}}
-{{--@push('js')--}}
-{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>--}}
-{{--    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>--}}
-{{--    <script src="{{ asset('assets/js/map.js') }}"></script>--}}
-{{--@endpush--}}
+@push('js')
+    <script>
+        function addFavorite(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are going to add to the favourite list',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: 'rgba(11,17,57,0.9)',
+                cancelButtonColor: '#9a1313',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#confirmForm"+id).submit();
+                }
+            })
+        }
+    </script>
+@endpush

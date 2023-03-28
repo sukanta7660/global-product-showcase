@@ -73,8 +73,6 @@
 </script>
 <script src="{{ asset('assets/js/collect.js') }}"></script>
 <script src="{{ asset('assets/js/lodash.js') }}"></script>
-<script src="{{ asset('/assets/js/main.js') }}"></script>
-<script src="{{ asset('assets/js/map.js') }}"></script>
 {{--@if(request()->path() === '/')--}}
 {{--    <script src="{{ mix('/js/app.js') }}"></script>--}}
 {{--@endif--}}
@@ -116,6 +114,10 @@
     </script>
 @endif
 {{-- Alert --}}
+
+<script src="{{ asset('/assets/js/main.js') }}"></script>
+<script src="{{ asset('assets/js/map.js') }}"></script>
+
 @stack('js')
 </body>
 </html>

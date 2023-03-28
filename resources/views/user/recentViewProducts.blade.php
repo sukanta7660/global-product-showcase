@@ -24,4 +24,21 @@
 @endsection
 @push('js')
     <script src="{{ asset('/assets/js/recentView.js') }}"></script>
+    <script>
+        function addFavorite(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are going to add to the favourite list',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: 'rgba(11,17,57,0.9)',
+                cancelButtonColor: '#9a1313',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#confirmForm"+id).submit();
+                }
+            })
+        }
+    </script>
 @endpush
