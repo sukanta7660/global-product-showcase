@@ -115,21 +115,21 @@ $('#productSearchBtn').on('click', function() {
             if (response.length) {
                 $.each(response, function (index, product) {
                     productHtml += `<tr>
-                <td>${product.shop.name}</td>
-                <td>${product.name}</td>
-                <td>$ ${product.price}</td>
-                <td>${product.shop.location_name}</td>
-                <td>${product.quantity}</td>
-                <td>
-                    <div class="btn-group">
-                        <button
-                        type="button"
-                        onClick="addMarker({ lat: '${product.shop.latitude}', lng: '${product.shop.longitude}', title: '${product.shop.name}'})"
-                        class="btn btn-primary">View In Map</button>
-                        <!--<a href="" class="btn btn-success">Add Favourites</a>-->
-                    </div>
-                </td>
-            </tr>`;
+                                    <td>${product.shop.name}</td>
+                                    <td>${product.name}</td>
+                                    <td>$ ${product.price}</td>
+                                    <td>${product.shop.location_name}</td>
+                                    <td>${product.quantity}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button
+                                            type="button"
+                                            onClick="addMarker({ lat: '${product.shop.latitude}', lng: '${product.shop.longitude}', title: '${product.shop.name}'})"
+                                            class="btn btn-primary">View In Map</button>
+                                            <a href="" class="btn btn-success">Add Favourites</a>
+                                        </div>
+                                    </td>
+                                </tr>`;
                 });
             } else {
                 productHtml += `
