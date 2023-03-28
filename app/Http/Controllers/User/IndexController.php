@@ -23,14 +23,14 @@ class IndexController extends Controller
         $latitude = $request->latitude;
         $longitude = $request->longitude;
 
-        $distance = 10000;
+//        $distance = 10000;
 
         $shops = Shop::selectRaw("*, ( 6371 * acos( cos( radians(?) ) *
             cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) *
             sin( radians( latitude ) ) ) ) AS distance")
-            ->having("distance", '<=', $distance)
             ->orderBy("distance", "asc")
             ->setBindings([$latitude, $longitude, $latitude])
+            ->take(10)
             ->get();
 
         $products = Product::join('shops', 'shops.id', '=', 'products.shop_id')

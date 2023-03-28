@@ -16,7 +16,7 @@ function statusFormat(bool $status) :string
 
 function getCurrencyFormat(int $amount = 0, string $symbol = '$') :string
 {
-    return $symbol .number_format($amount, 0);
+    return $symbol .number_format($amount, 2);
 }
 
 function formatAge($age = 0) :string

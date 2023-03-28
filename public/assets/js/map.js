@@ -126,7 +126,7 @@ $('#productSearchForm').on('submit', function(event) {
                     productHtml += `<tr>
                                     <td>${product.shop.name}</td>
                                     <td>${product.name}</td>
-                                    <td>$ ${moneyFormatter(product.price)}</td>
+                                    <td>${moneyFormatter(product.price)}</td>
                                     <td>${product.shop.location_name}</td>
                                     <td>${product.quantity}</td>
                                     <td>
