@@ -133,7 +133,7 @@ $('#productSearchForm').on('submit', function(event) {
                                         <div class="btn-group">
                                             <button
                                             type="button"
-                                            onClick="addMarker({ lat: '${product.shop.latitude}', lng: '${product.shop.longitude}', title: '${product.shop.name}'});)"
+                                            onClick="addMarker({ lat: '${product.shop.latitude}', lng: '${product.shop.longitude}', title: '${product.shop.name}'})"
                                             class="btn btn-primary">View In Map</button>
                                             <button
                                                 type="button"
