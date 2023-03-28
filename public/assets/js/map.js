@@ -1,4 +1,11 @@
-let map = L.map('map').setView([29.973350, -95.646450], 13);
+let initialLocation = { lat: 29.973350, lng: -95.646450, title: 'Bergenia' };
+
+if (currentLocation) {
+    let location = JSON.parse(currentLocation);
+    initialLocation = { lat: location.latitude, lng: location.longitude, title: location.location };
+}
+
+let map = L.map('map').setView(initialLocation, 13);
 
 
 /*-------------- Initialize Map ------------------*/
@@ -11,7 +18,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 let markers = [
-    {lat: 29.973350, lng: -95.646450, title: "Bergenia"}
+    initialLocation
 ];
 
 for (let i = 0; i < markers.length; i++) {
@@ -95,12 +102,14 @@ let geocoder = L.Control.Geocoder.nominatim();
 /*-------------- Make Searchable ------------------*/
 let currentLocationInfo = JSON.parse(localStorage.getItem('currentLocation'));
 
-$('#productSearchBtn').on('click', function() {
+$('#productSearchForm').on('submit', function(event) {
+
+    event.preventDefault();
 
     let productName = $('#productName').val();
     $.ajax({
         type: 'POST',
-        url: $(this).data('action'),
+        url: $(this).attr('action'),
         headers: {
             'X-CSRF-TOKEN': csrfToken
         },
@@ -115,9 +124,9 @@ $('#productSearchBtn').on('click', function() {
             if (response.length) {
                 $.each(response, function (index, product) {
                     productHtml += `<tr>
-                                    <td>${product.shop.name}</td>
+                                    <td>${product?.shop.name}</td>
                                     <td>${product.name}</td>
-                                    <td>$ ${product.price}</td>
+                                    <td>${moneyFormatter(product.price)}</td>
                                     <td>${product.shop.location_name}</td>
                                     <td>${product.quantity}</td>
                                     <td>
@@ -126,7 +135,19 @@ $('#productSearchBtn').on('click', function() {
                                             type="button"
                                             onClick="addMarker({ lat: '${product.shop.latitude}', lng: '${product.shop.longitude}', title: '${product.shop.name}'})"
                                             class="btn btn-primary">View In Map</button>
-                                            <a href="" class="btn btn-success">Add Favourites</a>
+                                            <button
+                                                type="button"
+                                                data-text="You are going to add to the favourite list"
+                                                onclick="addFavorite(${product.id})"
+                                                class="btn btn-success addFavConfirmBtn"
+                                            >
+                                                Add Favourites
+                                            </button>
+                                            <form method="POST" action="/add-to-favourite/${product.id}"
+                                                  id="confirmForm${product.id}">
+                                                <input type="hidden" name="_token" value="${csrfToken}">
+                                                <input id="method" type="hidden" name="_method" value="PATCH">
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>`;
