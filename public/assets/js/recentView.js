@@ -14,7 +14,7 @@ recentViewProducts.forEach(product => {
    <tr>
     <td>${product.shop.name}</td>
     <td>${product.name}</td>
-    <td>$ ${product.price}</td>
+    <td>${moneyFormatter(product.price)}</td>
     <td>${product.shop.location_name}</td>
     <td>${product.quantity}</td>
     <td>

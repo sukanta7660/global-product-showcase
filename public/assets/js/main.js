@@ -144,4 +144,8 @@ const recentlyViewedProducts = () => {
     return getFromLocalStorage('recently-open', true) || []
 };
 
+function moneyFormatter(value, currency = '$'){
+    return `${currency} ${parseFloat(value).toFixed(2)}`
+}
+
 

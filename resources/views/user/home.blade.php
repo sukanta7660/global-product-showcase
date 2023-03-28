@@ -3,13 +3,12 @@
 @section('content')
 
     <!-- Home Page Content -->
-    <form id="productSearchForm" method="post">
+    <form id="productSearchForm" method="post" action="{{ route('user.findShops') }}">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="productName" placeholder="eggs..." required>
             <label for="productName">Please type product name</label>
         </div>
-        <button type="button"
-                data-action="{{ route('user.findShops') }}"
+        <button type="submit"
                 id="productSearchBtn"
                 class="btn btn-primary">
             Search

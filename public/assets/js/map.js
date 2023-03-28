@@ -1,4 +1,4 @@
-let initialLocation = { lat: 29.973350, lng: -95.646450, location: 'Bergenia' };
+let initialLocation = { lat: 29.973350, lng: -95.646450, title: 'Bergenia' };
 
 if (currentLocation) {
     let location = JSON.parse(currentLocation);
@@ -102,12 +102,14 @@ let geocoder = L.Control.Geocoder.nominatim();
 /*-------------- Make Searchable ------------------*/
 let currentLocationInfo = JSON.parse(localStorage.getItem('currentLocation'));
 
-$('#productSearchBtn').on('click', function() {
+$('#productSearchForm').on('submit', function(event) {
+
+    event.preventDefault();
 
     let productName = $('#productName').val();
     $.ajax({
         type: 'POST',
-        url: $(this).data('action'),
+        url: $(this).attr('action'),
         headers: {
             'X-CSRF-TOKEN': csrfToken
         },
@@ -124,7 +126,7 @@ $('#productSearchBtn').on('click', function() {
                     productHtml += `<tr>
                                     <td>${product.shop.name}</td>
                                     <td>${product.name}</td>
-                                    <td>$ ${product.price}</td>
+                                    <td>$ ${moneyFormatter(product.price)}</td>
                                     <td>${product.shop.location_name}</td>
                                     <td>${product.quantity}</td>
                                     <td>
