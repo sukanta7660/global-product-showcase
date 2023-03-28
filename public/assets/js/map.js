@@ -1,4 +1,11 @@
-let map = L.map('map').setView([29.973350, -95.646450], 13);
+let initialLocation = { lat: 29.973350, lng: -95.646450, location: 'Bergenia' };
+
+if (currentLocation) {
+    let location = JSON.parse(currentLocation);
+    initialLocation = { lat: location.latitude, lng: location.longitude, title: location.location };
+}
+
+let map = L.map('map').setView(initialLocation, 13);
 
 
 /*-------------- Initialize Map ------------------*/
@@ -11,7 +18,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 let markers = [
-    {lat: 29.973350, lng: -95.646450, title: "Bergenia"}
+    initialLocation
 ];
 
 for (let i = 0; i < markers.length; i++) {
