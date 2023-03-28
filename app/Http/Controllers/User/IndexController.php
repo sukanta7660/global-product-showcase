@@ -33,10 +33,9 @@ class IndexController extends Controller
             ->take(10)
             ->get();
 
-        $products = Product::join('shops', 'shops.id', '=', 'products.shop_id')
+        $products = Product::with('shop')
             ->where('products.name', 'LIKE', '%'. $request->search .'%')
-            ->whereIn('shops.id', $shops->pluck('id')->toArray())
-            ->with('shop')
+            ->whereIn('shop_id', $shops->pluck('id')->toArray())
             ->get();
 
         return response()->json($products);

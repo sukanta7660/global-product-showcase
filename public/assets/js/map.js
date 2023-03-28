@@ -124,7 +124,7 @@ $('#productSearchForm').on('submit', function(event) {
             if (response.length) {
                 $.each(response, function (index, product) {
                     productHtml += `<tr>
-                                    <td>${product.shop.name}</td>
+                                    <td>${product?.shop.name}</td>
                                     <td>${product.name}</td>
                                     <td>${moneyFormatter(product.price)}</td>
                                     <td>${product.shop.location_name}</td>

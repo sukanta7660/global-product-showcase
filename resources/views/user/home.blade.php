@@ -17,8 +17,8 @@
     <table class="table table-bordered table-responsive mt-3">
         <thead>
             <tr>
-                <th>Shop Name</th>
-                <th>Product Name</th>
+                <th>Shop</th>
+                <th>Product</th>
                 <th>Price</th>
                 <th>Address</th>
                 <th>Quantity</th>
