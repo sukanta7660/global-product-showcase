@@ -20,7 +20,7 @@
                 <th>Shop</th>
                 <th>Product</th>
                 <th>Price</th>
-                <th>Address</th>
+                <th class="w-25">Address</th>
                 <th>Quantity</th>
                 <th>Action</th>
             </tr>

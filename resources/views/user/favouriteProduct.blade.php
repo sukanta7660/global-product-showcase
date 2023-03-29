@@ -7,7 +7,7 @@
             <th>Shop</th>
             <th>Product</th>
             <th>Price</th>
-            <th>Address</th>
+            <th class="w-25">Address</th>
             <th>Quantity</th>
             <th>Action</th>
         </tr>
@@ -19,13 +19,13 @@
                 <td>{{ $favourite->product->shop->location->name }}</td>
                 <td>{{ $favourite->product->quantity }}</td>
                 <td>
-                    <div class="btn-group">
+                    <div class="bd-grid gap-2">
                         <form method="POST" action="{{ route('user.remove-from.my-favourite', $favourite->id) }}"
                               id="confirmForm{{ $favourite->id }}">
                             <button
                                 type="button"
                                 onclick="addMarker({ lat: '{{ $favourite->product->shop->latitude }}', lng: '{{ $favourite->product->shop->longitude }}', title: '{{ $favourite->product->shop->name }}' })"
-                                class="btn btn-sm mb-1 btn-block btn-primary">
+                                class="btn btn-sm btn-block btn-primary">
                                 View in Map
                             </button>
                             @csrf

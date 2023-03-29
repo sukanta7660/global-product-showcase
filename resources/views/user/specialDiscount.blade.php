@@ -16,13 +16,17 @@
                 <td>{{ $product->shop->name }}</td>
                 <td>{{ $product->name }}</td>
                 <td>{{ getCurrencyFormat($product->price) }}</td>
-                <td>{{ $product->shop->location->name }}</td>
+                <td class="w-25">
+                    <p>
+                        {{ $product->shop->location_name }}
+                    </p>
+                </td>
                 <td>{{ $product->quantity }}</td>
                 <td>
-                    <div class="btn-group">
+                    <div class="d-grid gap-2">
                         <button
                             type="button"
-                            onclick="addMarker({ lat: '{{ $product->shop->latitude }}', lng: '{{ $product->shop->longitude }}', title: '{{ $product->shop->name }}', product: '{{ $product }}' })"
+                            onclick="addMarker({ lat: '{{ $product->shop->latitude }}', lng: '{{ $product->shop->longitude }}', type: 'json', title: '{{ $product->shop->name }}', product: '{{ rawurlencode(json_encode($product)) }}' })"
                            class="btn btn-primary">
                             View in Map
                         </button>
