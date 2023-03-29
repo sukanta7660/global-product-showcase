@@ -36,6 +36,7 @@ class ProductController extends Controller
 
             $product->create(array_merge($request->all(), [
                 'discount_enabled' => isset($request->discount_enabled),
+                'slug' => $request->slug.'-'.time(),
                 'discount_price' => isset($request->discount_enabled) ? $request->discount_price : 0,
                 'status' => isset($request->status),
             ]));
@@ -61,6 +62,7 @@ class ProductController extends Controller
 
             $product->update(array_merge($request->except(['_token', '_method']), [
                 'discount_enabled' => isset($request->discount_enabled),
+                'slug' => $request->slug.'-'.time(),
                 'discount_price' => isset($request->discount_enabled) ? $request->discount_price : 0,
                 'status' => isset($request->status),
             ]));
@@ -97,17 +99,17 @@ class ProductController extends Controller
 
     private function validateData($request, $product = null) :void
     {
-        $uniqueName = ($request->method() == 'PATCH')
-            ? "unique:products,name,{$product->id}"
-            : 'unique:products,name';
-        $uniqueSlug = ($request->method() == 'PATCH')
-            ? "unique:products,slug,{$product->id}"
-            : 'unique:products,slug';
+        // $uniqueName = ($request->method() == 'PATCH')
+        //     ? "unique:products,name,{$product->id}"
+        //     : 'unique:products,name';
+        // $uniqueSlug = ($request->method() == 'PATCH')
+        //     ? "unique:products,slug,{$product->id}"
+        //     : 'unique:products,slug';
 
         $request->validate([
             'shop_id'           => 'required|exists:shops,id',
-            'name'              => "required|string|min:3|max:35|{$uniqueName}",
-            'slug'              => "required|string|min:3|max:50|{$uniqueSlug}",
+            'name'              => "required|string|min:3|max:35",
+            'slug'              => "required|string|min:3|max:50",
             'description'       => 'nullable|string',
             'price'             => 'required|numeric',
             'quantity'          => 'required|string',

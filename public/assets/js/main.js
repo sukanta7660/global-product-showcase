@@ -1,5 +1,5 @@
 const LOCATION_KEY = 'currentLocation';
-const EXPIRY_DURATION = 120;
+const EXPIRY_DURATION = 3600;
 let myModal = new bootstrap.Modal(document.getElementById('locationModal'), {
     backdrop: 'static',
     keyboard: false
@@ -67,13 +67,19 @@ $('#addLocationBtn').on('click', function () {
 
 const addToRecentViewList = (product) => {
 
+
     const previousData = getFromLocalStorage('recently-open', true);
 
-    let dataToStore = [product];
+    let data = {
+        ...product,
+        stored_at: new Date()
+    };
+
+    let dataToStore = [data];
 
     if (previousData.length) {
 
-        dataToStore = [product, ...previousData];
+        dataToStore = [data, ...previousData];
 
         dataToStore = [...new Set(dataToStore.map(obj => JSON.stringify(obj)))].map(str => JSON.parse(str));
     }

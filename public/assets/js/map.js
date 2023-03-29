@@ -77,15 +77,16 @@ searchInput.addEventListener('keyup', function() {
 /*-------------- Location Search ------------------*/
 
 /*-------------- Add Marker To The Map ------------------*/
-function addMarker({ lat, lng, title, product = null }) {
+function addMarker({ lat, lng, title, product = null, type = null }) {
     let marker = L.marker([lat, lng], {
         title: title
     }).addTo(map);
+    
+    let productToViewList = type ? JSON.parse(decodeURIComponent(product)) : product
 
-    console.log(product)
 
     if (product) {
-        addToRecentViewList(product);
+        addToRecentViewList(productToViewList);
     }
 
     map.flyTo([lat, lng], 15);
@@ -130,10 +131,10 @@ $('#productSearchForm').on('submit', function(event) {
                                     <td>${product.shop.location_name}</td>
                                     <td>${product.quantity}</td>
                                     <td>
-                                        <div class="btn-group">
+                                        <div class="d-grid gap-2">
                                             <button
                                             type="button"
-                                            onClick="addMarker({ lat: '${product.shop.latitude}', lng: '${product.shop.longitude}', title: '${product.shop.name}'})"
+                                            onClick="addMarker({ lat: '${product.shop.latitude}', lng: '${product.shop.longitude}', title: '${product.shop.name}', type: 'json', product: '${encodeURIComponent(JSON.stringify(product))}'})"
                                             class="btn btn-primary">View In Map</button>
                                             <button
                                                 type="button"

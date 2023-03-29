@@ -2,6 +2,9 @@
 body{
     font-family: 'Poppins', sans-serif;
 }
+.w-25 {
+    width: 25%;
+}
 .food-title {
 	font-weight: 700;
 	border-bottom: 3px solid #ddd;

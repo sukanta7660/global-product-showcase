@@ -1,17 +1,17 @@
 const allProducts = recentlyViewedProducts();
 
-let recentViewProducts = [];
+// let recentViewProducts = [];
 
-allProducts.map(product => {
-    let singleProduct = $.parseJSON(product.replace(/\s+/g,""));
-    recentViewProducts.push(singleProduct);
-});
+// allProducts.map(product => {
+//     let singleProduct = $.parseJSON(product.replace(/\s+/g,""));
+//     recentViewProducts.push(singleProduct);
+// });
 
-console.log(recentViewProducts)
+// console.log(recentViewProducts)
 
 let productHTML = '';
 
-recentViewProducts.forEach(product => {
+allProducts.forEach(product => {
     productHTML += `
    <tr>
     <td>${product.shop.name}</td>
@@ -20,10 +20,10 @@ recentViewProducts.forEach(product => {
     <td>${product.shop.location_name}</td>
     <td>${product.quantity}</td>
     <td>
-        <div class="btn-group">
+        <div class="d-grid gap-2">
             <button
                 type="button"
-                onClick="addMarker({ lat: '${product.shop.latitude}', lng: '${product.shop.longitude}', title: '${product.shop.name}'}); "
+                onClick="addMarker({ lat: '${product.shop.latitude}', lng: '${product.shop.longitude}', title: '${product.shop.name}', type: 'json', product: '${encodeURIComponent(JSON.stringify(product))}'}}); "
                 class="btn btn-primary">
                 View in Map
             </button>
