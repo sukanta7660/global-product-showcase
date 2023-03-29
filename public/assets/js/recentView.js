@@ -23,7 +23,7 @@ allProducts.forEach(product => {
         <div class="d-grid gap-2">
             <button
                 type="button"
-                onClick="addMarker({ lat: '${product.shop.latitude}', lng: '${product.shop.longitude}', title: '${product.shop.name}', type: 'json', product: '${encodeURIComponent(JSON.stringify(product))}'}}); "
+                onClick="addMarker({ lat: '${product.shop.latitude}', lng: '${product.shop.longitude}', title: '${product.shop.name}', type: 'json', product: '${encodeURIComponent(JSON.stringify(product))}'})"
                 class="btn btn-primary">
                 View in Map
             </button>
