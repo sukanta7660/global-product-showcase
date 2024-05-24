@@ -1,10 +1,10 @@
-# Getting started of GEOGRAPHICAL Product
+# Getting started of GEOGRAPHICAL Product Showcase
 
 ## Installation
 
 Clone the repository
 
-    git clone git@github.com:devs-ground/geographical-product.git
+    git clone git@github.com:sukanta7660/global-product-showcase.git
 
 Switch to the repo folder
 
@@ -34,7 +34,7 @@ You can now access the server at http://localhost:8000
 
 **TL;DR command list**
 
-    git clone git@github.com:devs-ground/geographical-product.git
+    git clone git@github.com:sukanta7660/global-product-showcase.git
     cd geographical-product
     composer install
     cp .env.example .env
