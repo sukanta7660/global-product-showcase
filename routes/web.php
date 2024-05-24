@@ -23,6 +23,17 @@ Route::get('/clear', function(){
     return 'cleared';
 });
 
+Route::get('/migrate', function(){
+    \Artisan::call('migrate:fresh --seed');
+    return 'database migrated';
+});
+
+Route::get('/update-app', function()
+{
+    \Artisan::call('dump-autoload');
+    echo 'dump-autoload complete';
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
